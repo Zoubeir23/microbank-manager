@@ -15,7 +15,7 @@
         <!-- Le poste de developpement tourne sur un JDK recent : on fige la version
              de bytecode produite pour que le compilateur de JSP (Jasper/ecj) du
              serveur d'application puisse relire les classes sans probleme. -->
-        <maven.compiler.release>21</maven.compiler.release>
+        <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
