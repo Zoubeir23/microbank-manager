@@ -3,6 +3,8 @@ target/
 *.war
 *.jar
 
+tasks/
+test/
 .idea/
 *.iml
 *.ipr
