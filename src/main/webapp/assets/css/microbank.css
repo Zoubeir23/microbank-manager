@@ -1,59 +1,648 @@
-/* Habillage propre a MicroBank, en complement de Bootstrap. */
+/* =====================================================================
+   MicroBank Manager - habillage de l'application
+   Bootstrap 5 fournit la grille et les composants ; ce fichier definit
+   l'identite visuelle par-dessus, sans modifier le balisage des JSP.
+
+   Direction : registre comptable edite. Papier chaud, encre foret,
+   accent terre cuite, chiffres monospaces alignes en colonnes.
+   ===================================================================== */
+
+@import url("polices.css");
 
 :root {
-    --microbank-bleu: #0d47a1;
-    --microbank-bleu-clair: #e8eefb;
+    /* Encres */
+    --encre: #12261F;
+    --encre-douce: #3D5148;
+    --encre-pale: #6E7F77;
+
+    /* Papiers */
+    --papier: #F6F1E7;
+    --papier-clair: #FCFAF5;
+    --papier-ombre: #EAE2D3;
+
+    /* Accents */
+    --terre: #B4541F;
+    --terre-claire: #D9784A;
+    --or: #C89B3C;
+
+    /* Semantique bancaire */
+    --credit: #1D6A4A;
+    --debit: #9E3418;
+
+    /* Traits */
+    --trait: #DCD2C0;
+    --trait-fort: #C3B79F;
+
+    --rayon: 2px;
+    --ombre-carte: 0 1px 0 var(--papier-ombre), 0 12px 28px -22px rgba(18, 38, 31, 0.55);
+
+    --police-titre: "Fraunces", Georgia, "Times New Roman", serif;
+    --police-texte: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+    --police-chiffre: "IBM Plex Mono", "SF Mono", Consolas, monospace;
 }
 
+/* ---------------------------------------------------------------------
+   Fond : papier legerement grene, plus une regle verticale discrete.
+   --------------------------------------------------------------------- */
 body {
-    background-color: #f5f6fa;
+    background-color: var(--papier);
+    background-image:
+        radial-gradient(circle at 1px 1px, rgba(18, 38, 31, 0.045) 1px, transparent 0);
+    background-size: 4px 4px;
+    color: var(--encre);
+    font-family: var(--police-texte);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--police-titre);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--encre);
+}
+
+h1.h3 {
+    font-size: 1.85rem;
+    font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+/* Montants, dates, references et identifiants : chiffres a chasse fixe, pour
+   qu'ils s'alignent verticalement en colonne comme dans un registre.
+   La classe est posee explicitement sur les cellules concernees : une colonne
+   ajoutee ou deplacee ne peut pas casser l'alignement. */
+.cellule-chiffre,
+.montant-credit,
+.montant-debit,
+.carte-statistique .valeur,
+code, .reference {
+    font-family: var(--police-chiffre);
+    font-variant-numeric: tabular-nums;
+}
+
+.cellule-chiffre {
+    font-size: 0.86rem;
+    white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------------
+   Navigation : bandeau encre, filet or, majuscules espacees.
+   --------------------------------------------------------------------- */
 .navbar-microbank {
-    background-color: var(--microbank-bleu);
+    background-color: var(--encre);
+    border-bottom: 3px solid var(--terre);
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
 }
 
-.navbar-microbank .navbar-brand,
+.navbar-microbank .navbar-brand {
+    font-family: var(--police-titre);
+    font-weight: 700;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+    color: var(--papier-clair);
+}
+
+.navbar-microbank .navbar-brand::first-letter {
+    color: var(--or);
+}
+
 .navbar-microbank .nav-link {
-    color: #ffffff;
+    color: rgba(246, 241, 231, 0.72);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding-left: 0.9rem;
+    padding-right: 0.9rem;
+    position: relative;
+    transition: color 0.18s ease;
+}
+
+.navbar-microbank .nav-link:hover {
+    color: var(--papier-clair);
 }
 
 .navbar-microbank .nav-link.actif {
-    font-weight: 600;
-    border-bottom: 2px solid #ffffff;
+    color: var(--papier-clair);
+    border-bottom: none;
 }
 
+/* Le marqueur de page courante glisse sous l'onglet actif. */
+.navbar-microbank .nav-link.actif::after {
+    content: "";
+    position: absolute;
+    left: 0.9rem;
+    right: 0.9rem;
+    bottom: -0.35rem;
+    height: 2px;
+    background: var(--or);
+    animation: glisser-marqueur 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes glisser-marqueur {
+    from { transform: scaleX(0); opacity: 0; }
+    to   { transform: scaleX(1); opacity: 1; }
+}
+
+.navbar-microbank .badge {
+    background-color: var(--or) !important;
+    color: var(--encre) !important;
+    font-family: var(--police-texte);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 1px;
+    padding: 0.25em 0.5em;
+}
+
+/* ---------------------------------------------------------------------
+   Cartes : feuilles de papier posees, coins nets.
+   --------------------------------------------------------------------- */
+.card {
+    background-color: var(--papier-clair);
+    border: 1px solid var(--trait);
+    border-radius: var(--rayon);
+    box-shadow: var(--ombre-carte);
+}
+
+.card-header {
+    background-color: transparent !important;
+    border-bottom: 1px solid var(--trait);
+    font-family: var(--police-texte);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--encre-douce);
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+}
+
+/* ---------------------------------------------------------------------
+   Compteurs du tableau de bord : chiffre dominant, filet lateral.
+   --------------------------------------------------------------------- */
 .carte-statistique {
-    border-left: 4px solid var(--microbank-bleu);
+    border-left: 3px solid var(--encre);
+    position: relative;
+    overflow: hidden;
+}
+
+.carte-statistique:nth-of-type(1) { border-left-color: var(--encre); }
+
+.carte-statistique .text-muted {
+    font-size: 0.7rem !important;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--encre-pale) !important;
 }
 
 .carte-statistique .valeur {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--microbank-bleu);
+    font-family: var(--police-titre);
+    font-variant-numeric: tabular-nums;
+    font-size: 2.6rem;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--encre);
+    margin-top: 0.35rem;
 }
 
+/* Chaque compteur apparait avec un leger decalage a l'ouverture. */
+.row > [class*="col-"] > .carte-statistique {
+    animation: monter 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.row > [class*="col-"]:nth-child(1) > .carte-statistique { animation-delay: 0.02s; }
+.row > [class*="col-"]:nth-child(2) > .carte-statistique { animation-delay: 0.09s; }
+.row > [class*="col-"]:nth-child(3) > .carte-statistique { animation-delay: 0.16s; }
+.row > [class*="col-"]:nth-child(4) > .carte-statistique { animation-delay: 0.23s; }
+
+@keyframes monter {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* ---------------------------------------------------------------------
+   Barre de repartition des mouvements du jour.
+   --------------------------------------------------------------------- */
+.barre-repartition {
+    display: flex;
+    height: 10px;
+    background-color: var(--papier-ombre);
+    border: 1px solid var(--trait);
+    overflow: hidden;
+}
+
+.barre-repartition span {
+    display: block;
+    animation: etirer 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    animation-delay: 0.3s;
+}
+
+.barre-repartition .part-credit {
+    background-color: var(--credit);
+}
+
+.barre-repartition .part-debit {
+    background-image: repeating-linear-gradient(
+        45deg, var(--debit), var(--debit) 3px,
+        rgba(158, 52, 24, 0.72) 3px, rgba(158, 52, 24, 0.72) 6px);
+}
+
+@keyframes etirer {
+    from { transform: scaleX(0); transform-origin: left; }
+    to   { transform: scaleX(1); transform-origin: left; }
+}
+
+/* ---------------------------------------------------------------------
+   Montants : le sens du mouvement se lit a la couleur et au signe.
+   --------------------------------------------------------------------- */
 .montant-credit {
-    color: #1b7f3b;
+    color: var(--credit);
     font-weight: 600;
 }
 
 .montant-debit {
-    color: #b3261e;
+    color: var(--debit);
     font-weight: 600;
 }
 
-.tableau-donnees th {
-    background-color: var(--microbank-bleu-clair);
-    white-space: nowrap;
+/* ---------------------------------------------------------------------
+   Tableaux : lignes de registre, entetes en petites capitales.
+   --------------------------------------------------------------------- */
+.tableau-donnees {
+    border-color: var(--trait);
 }
 
+.tableau-donnees thead th {
+    background-color: transparent;
+    border-bottom: 2px solid var(--encre);
+    font-family: var(--police-texte);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--encre-douce);
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
+}
+
+.tableau-donnees tbody tr {
+    border-bottom: 1px solid var(--trait);
+    transition: background-color 0.14s ease;
+}
+
+.tableau-donnees tbody tr:hover {
+    background-color: var(--papier-ombre) !important;
+    --bs-table-accent-bg: transparent;
+}
+
+.tableau-donnees td {
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    vertical-align: middle;
+}
+
+/* ---------------------------------------------------------------------
+   Formulaires : champs sobres, focus terre cuite.
+   --------------------------------------------------------------------- */
+.form-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--encre-douce);
+    margin-bottom: 0.35rem;
+}
+
+.form-control,
+.form-select {
+    background-color: var(--papier-clair);
+    border: 1px solid var(--trait-fort);
+    border-radius: var(--rayon);
+    color: var(--encre);
+    padding: 0.55rem 0.75rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: #fff;
+    border-color: var(--terre);
+    box-shadow: 0 0 0 3px rgba(180, 84, 31, 0.14);
+    color: var(--encre);
+}
+
+.form-control::placeholder {
+    color: var(--encre-pale);
+}
+
+.form-text {
+    color: var(--encre-pale);
+    font-size: 0.78rem;
+}
+
+.form-control.is-invalid,
+.form-select.is-invalid {
+    border-color: var(--debit);
+    background-image: none;
+}
+
+.invalid-feedback {
+    color: var(--debit);
+    font-size: 0.78rem;
+}
+
+/* ---------------------------------------------------------------------
+   Boutons : rectangles nets, deplacement d'un pixel au clic.
+   --------------------------------------------------------------------- */
+.btn {
+    border-radius: var(--rayon);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 0.55rem 1.1rem;
+    transition: transform 0.1s ease, background-color 0.16s ease,
+                color 0.16s ease, border-color 0.16s ease;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-sm {
+    font-size: 0.68rem;
+    padding: 0.35rem 0.7rem;
+    letter-spacing: 0.06em;
+}
+
+.btn-primary {
+    background-color: var(--encre);
+    border-color: var(--encre);
+    color: var(--papier-clair);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: var(--terre);
+    border-color: var(--terre);
+    color: #fff;
+}
+
+.btn-outline-primary {
+    border-color: var(--encre);
+    color: var(--encre);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--encre);
+    border-color: var(--encre);
+    color: var(--papier-clair);
+}
+
+.btn-outline-secondary {
+    border-color: var(--trait-fort);
+    color: var(--encre-douce);
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--encre-douce);
+    border-color: var(--encre-douce);
+    color: var(--papier-clair);
+}
+
+.btn-success,
+.btn-outline-success {
+    --bs-btn-bg: var(--credit);
+    --bs-btn-border-color: var(--credit);
+    --bs-btn-color: #fff;
+    --bs-btn-hover-bg: #17553a;
+    --bs-btn-hover-border-color: #17553a;
+    --bs-btn-hover-color: #fff;
+}
+
+.btn-outline-success {
+    --bs-btn-bg: transparent;
+    --bs-btn-color: var(--credit);
+}
+
+.btn-warning,
+.btn-outline-warning {
+    --bs-btn-bg: var(--or);
+    --bs-btn-border-color: var(--or);
+    --bs-btn-color: var(--encre);
+    --bs-btn-hover-bg: #b08a30;
+    --bs-btn-hover-border-color: #b08a30;
+    --bs-btn-hover-color: var(--encre);
+}
+
+.btn-outline-warning {
+    --bs-btn-bg: transparent;
+    --bs-btn-color: #8a6a20;
+    --bs-btn-border-color: var(--or);
+}
+
+.btn-outline-danger {
+    --bs-btn-color: var(--debit);
+    --bs-btn-border-color: rgba(158, 52, 24, 0.45);
+    --bs-btn-hover-bg: var(--debit);
+    --bs-btn-hover-border-color: var(--debit);
+    --bs-btn-hover-color: #fff;
+}
+
+.btn-link {
+    color: var(--encre-douce);
+    text-transform: none;
+    letter-spacing: 0;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+
+.btn-link:hover {
+    color: var(--terre);
+}
+
+/* ---------------------------------------------------------------------
+   Etiquettes de statut.
+   --------------------------------------------------------------------- */
+.badge {
+    border-radius: 1px;
+    font-family: var(--police-texte);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.35em 0.6em;
+}
+
+.badge.text-bg-success { background-color: var(--credit) !important; color: #fff !important; }
+.badge.text-bg-secondary { background-color: var(--encre-pale) !important; color: #fff !important; }
+.badge.text-bg-warning { background-color: var(--or) !important; color: var(--encre) !important; }
+.badge.text-bg-dark { background-color: var(--encre) !important; color: var(--papier-clair) !important; }
+.badge.text-bg-info { background-color: var(--papier-ombre) !important; color: var(--encre) !important; }
+
+/* ---------------------------------------------------------------------
+   Messages : bande verticale coloree, pas de bloc criard.
+   --------------------------------------------------------------------- */
+.alert {
+    background-color: var(--papier-clair);
+    border: 1px solid var(--trait);
+    border-left: 3px solid var(--encre-pale);
+    border-radius: var(--rayon);
+    color: var(--encre);
+    font-size: 0.9rem;
+    animation: monter 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.alert-success { border-left-color: var(--credit); }
+.alert-danger  { border-left-color: var(--debit); }
+.alert-warning { border-left-color: var(--or); }
+.alert-info    { border-left-color: var(--encre-douce); }
+
+/* ---------------------------------------------------------------------
+   Pagination.
+   --------------------------------------------------------------------- */
+.pagination {
+    --bs-pagination-border-radius: var(--rayon);
+    gap: 0.25rem;
+}
+
+.page-link {
+    background-color: var(--papier-clair);
+    border: 1px solid var(--trait);
+    color: var(--encre-douce);
+    font-family: var(--police-chiffre);
+    font-size: 0.8rem;
+    padding: 0.4rem 0.75rem;
+}
+
+.page-link:hover {
+    background-color: var(--papier-ombre);
+    border-color: var(--trait-fort);
+    color: var(--encre);
+}
+
+.page-item.active .page-link {
+    background-color: var(--encre);
+    border-color: var(--encre);
+    color: var(--papier-clair);
+}
+
+.page-item.disabled .page-link {
+    background-color: transparent;
+    border-color: var(--trait);
+    color: var(--encre-pale);
+}
+
+/* ---------------------------------------------------------------------
+   Page de connexion : filet or en haut, marque en serif.
+   --------------------------------------------------------------------- */
+.page-connexion {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background-image:
+        radial-gradient(circle at 1px 1px, rgba(18, 38, 31, 0.05) 1px, transparent 0),
+        linear-gradient(180deg, var(--papier-ombre), var(--papier) 45%);
+    background-size: 4px 4px, 100% 100%;
+}
+
+.marque-connexion {
+    font-family: var(--police-titre);
+    font-size: 2.6rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--encre);
+}
+
+.marque-connexion .point {
+    color: var(--terre);
+}
+
+.sous-marque {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--encre-pale);
+}
+
+.carte-connexion {
+    border-top: 3px solid var(--terre);
+    animation: monter 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Capacites listees a gauche de la connexion : lignes de sommaire.
+   Gouttiere annulee pour que les filets des deux colonnes se rejoignent. */
+.liste-capacites {
+    --bs-gutter-x: 0;
+}
+
+.liste-capacites dt,
+.liste-capacites dd {
+    padding-top: 0.55rem;
+    padding-bottom: 0.55rem;
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--trait);
+}
+
+.liste-capacites dd {
+    font-family: var(--police-chiffre);
+    font-size: 0.82rem;
+    color: var(--encre-douce);
+}
+
+/* ---------------------------------------------------------------------
+   Detail de compte : le solde est l'element dominant de la page.
+   --------------------------------------------------------------------- */
+dl.row dt {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--encre-pale);
+    padding-top: 0.45rem;
+}
+
+dl.row dd {
+    padding-top: 0.4rem;
+    margin-bottom: 0.35rem;
+    border-bottom: 1px dotted var(--trait);
+}
+
+a {
+    color: var(--terre);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+
+a:hover {
+    color: var(--encre);
+}
+
+.navbar a, .btn, .page-link {
+    text-decoration: none;
+}
+
+/* ---------------------------------------------------------------------
+   Pied de page.
+   --------------------------------------------------------------------- */
 .pied-de-page {
-    color: #6c757d;
-    font-size: 0.875rem;
+    color: var(--encre-pale);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    border-top: 1px solid var(--trait);
+    padding-top: 1.25rem;
+    margin-top: 3rem;
 }
 
-/* Version imprimable du releve (bonus 5) : on masque tout ce qui n'est pas le contenu. */
+/* ---------------------------------------------------------------------
+   Version imprimable du releve (bonus 5) : on ne garde que le contenu.
+   --------------------------------------------------------------------- */
 @media print {
     .navbar,
     .zone-non-imprimable,
@@ -63,10 +652,30 @@ body {
     }
 
     body {
-        background-color: #ffffff;
+        background: #fff;
+        color: #000;
+        font-size: 11pt;
     }
 
     .card {
-        border: none !important;
+        border: 1px solid #000;
+        box-shadow: none;
+    }
+
+    .tableau-donnees thead th {
+        border-bottom: 1.5pt solid #000;
+    }
+
+    a {
+        color: #000;
+        text-decoration: none;
+    }
+}
+
+/* Respect du reglage systeme : pas d'animation si l'utilisateur n'en veut pas. */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
     }
 }

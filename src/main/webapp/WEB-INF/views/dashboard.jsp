@@ -5,10 +5,14 @@
 <c:set var="menuActif" value="dashboard" scope="request"/>
 <jsp:include page="layout/header.jsp"/>
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="h3 mb-0">Tableau de bord</h1>
-    <span class="text-muted">
-        Bonjour <c:out value="${sessionScope.user.prenom}"/>
+<div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-2">
+    <div>
+        <p class="sous-marque mb-1">Situation de l'institution</p>
+        <h1 class="h3 mb-0">Tableau de bord</h1>
+    </div>
+    <span class="text-muted small">
+        Bonjour <c:out value="${sessionScope.user.prenom}"/>,
+        agence de Dakar
     </span>
 </div>
 
@@ -80,7 +84,25 @@
                         </div>
                     </div>
                 </div>
-                <hr>
+                <%-- Repartition depots / retraits de la journee.
+                     Le total peut etre nul : on evite alors la division. --%>
+                <c:set var="totalMouvements"
+                       value="${statistiques.totalDepotsDuJour + statistiques.totalRetraitsDuJour}"/>
+                <c:set var="partDesDepots"
+                       value="${totalMouvements > 0
+                                ? (statistiques.totalDepotsDuJour * 100) / totalMouvements : 0}"/>
+
+                <div class="barre-repartition mt-4" role="img"
+                     aria-label="Repartition des mouvements du jour entre depots et retraits">
+                    <span class="part-credit" style="width: ${partDesDepots}%"></span>
+                    <span class="part-debit" style="width: ${100 - partDesDepots}%"></span>
+                </div>
+                <div class="d-flex justify-content-between sous-marque mt-2">
+                    <span>Depots</span>
+                    <span>Retraits</span>
+                </div>
+
+                <hr class="mt-4">
                 <div class="row text-muted small">
                     <div class="col-6">Utilisateurs : ${statistiques.nombreDUtilisateurs}</div>
                     <div class="col-6">Agences : ${statistiques.nombreDAgences}</div>

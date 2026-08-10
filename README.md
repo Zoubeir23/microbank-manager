@@ -134,7 +134,29 @@ et la generation du releve PDF.
 
 ---
 
-## 8. Structure du projet
+## 8. Interface
+
+Bootstrap 5.3 fournit la grille et les composants (navbar, formulaires, tableaux,
+alertes, pagination) ; `assets/css/microbank.css` pose l'identite visuelle par-dessus,
+sans modifier le balisage.
+
+Parti pris : **un registre comptable edite**, pas un tableau de bord generique.
+
+| Choix | Raison |
+|---|---|
+| Fond papier chaud, encre vert foret, accent terre cuite | Identite sobre et institutionnelle, lisible en salle de soutenance |
+| Titres en Fraunces, texte en IBM Plex Sans | Une serif de caractere pour la hierarchie, une sans technique pour la lecture |
+| Montants, dates et references en IBM Plex Mono | Chiffres tabulaires : les colonnes s'alignent verticalement comme dans un livre de comptes |
+| Vert pour les credits, rouge hachure pour les debits | Le sens d'un mouvement se lit sans lire le libelle |
+| Polices, CSS et JS embarques dans le WAR | La demonstration fonctionne sans connexion internet |
+
+Les animations se limitent a l'ouverture de page (apparition decalee des compteurs,
+barre de repartition) et sont desactivees si le systeme demande
+`prefers-reduced-motion`.
+
+---
+
+## 9. Structure du projet
 
 ```
 src/main/java/sn/isi/iage/microbank/
@@ -152,7 +174,10 @@ src/main/java/sn/isi/iage/microbank/
                   AmountFormatter, StatementPdfWriter, OperationCsvWriter
 
 src/main/webapp/
-├── assets/       Bootstrap 5.3 et feuille de style de l'application (embarques)
+├── assets/
+│   ├── css/      Bootstrap 5.3, microbank.css (identite visuelle), polices.css
+│   ├── fonts/    Fraunces et IBM Plex embarques (licence SIL OFL 1.1)
+│   └── js/       Bootstrap bundle
 └── WEB-INF/
     ├── web.xml           Sessions, pages d'erreur, declaration du taglib
     ├── microbank.tld     Fonctions de formatage utilisables dans les JSP
@@ -161,7 +186,7 @@ src/main/webapp/
 
 ---
 
-## 9. Principales URL
+## 10. Principales URL
 
 | Methode | URL | Role |
 |---|---|---|
@@ -182,7 +207,7 @@ src/main/webapp/
 
 ---
 
-## 10. Documentation
+## 11. Documentation
 
 - `docs/documentation.md` : architecture MVC, modele de donnees, fonctionnalites et
   difficultes rencontrees.

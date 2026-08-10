@@ -49,11 +49,11 @@
             <tbody>
             <c:forEach var="compte" items="${page.contenu}">
                 <tr>
-                    <td class="fw-semibold"><c:out value="${compte.numeroCompte}"/></td>
+                    <td class="cellule-chiffre fw-semibold"><c:out value="${compte.numeroCompte}"/></td>
                     <td><c:out value="${compte.client.nomComplet}"/></td>
                     <td><c:out value="${compte.type.libelle}"/></td>
-                    <td class="text-end">${mb:montant(compte.solde)}</td>
-                    <td>${mb:date(compte.dateOuverture)}</td>
+                    <td class="text-end cellule-chiffre">${mb:montant(compte.solde)}</td>
+                    <td class="cellule-chiffre">${mb:date(compte.dateOuverture)}</td>
                     <td>
                         <span class="badge ${compte.statut eq 'ACTIF' ? 'text-bg-success' : (compte.statut eq 'BLOQUE' ? 'text-bg-warning' : 'text-bg-secondary')}">
                             <c:out value="${compte.statut.libelle}"/>

@@ -125,8 +125,8 @@
             <tbody>
             <c:forEach var="operation" items="${page.contenu}">
                 <tr>
-                    <td class="text-nowrap">${mb:dateHeure(operation.dateOperation)}</td>
-                    <td><c:out value="${operation.reference}"/></td>
+                    <td class="cellule-chiffre">${mb:dateHeure(operation.dateOperation)}</td>
+                    <td class="cellule-chiffre"><c:out value="${operation.reference}"/></td>
                     <td><c:out value="${operation.type.libelle}"/></td>
                     <td>
                         <a href="${contexte}/accounts/details?id=${operation.compte.id}">
@@ -136,10 +136,10 @@
                     <td><c:out value="${operation.compte.client.nomComplet}"/></td>
                     <td><c:out value="${operation.description}"/></td>
                     <td><c:out value="${operation.user.login}"/></td>
-                    <td class="text-end text-nowrap ${operation.sens eq 'CREDIT' ? 'montant-credit' : 'montant-debit'}">
+                    <td class="text-end cellule-chiffre ${operation.sens eq 'CREDIT' ? 'montant-credit' : 'montant-debit'}">
                         <c:out value="${operation.sens.signe}"/>${mb:montant(operation.montant)}
                     </td>
-                    <td class="text-end">${mb:montant(operation.soldeApres)}</td>
+                    <td class="text-end cellule-chiffre">${mb:montant(operation.soldeApres)}</td>
                 </tr>
             </c:forEach>
 

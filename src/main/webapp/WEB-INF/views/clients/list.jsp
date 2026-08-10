@@ -51,12 +51,12 @@
             <c:forEach var="client" items="${page.contenu}">
                 <tr>
                     <%-- Numero d'affichage du client, au format C001 comme au §8. --%>
-                    <td>${mb:numeroClient(client.id)}</td>
+                    <td class="cellule-chiffre">${mb:numeroClient(client.id)}</td>
                     <td><c:out value="${client.nom}"/></td>
                     <td><c:out value="${client.prenom}"/></td>
-                    <td><c:out value="${client.telephone}"/></td>
+                    <td class="cellule-chiffre"><c:out value="${client.telephone}"/></td>
                     <td><c:out value="${client.email}"/></td>
-                    <td><c:out value="${client.numeroPiece}"/></td>
+                    <td class="cellule-chiffre"><c:out value="${client.numeroPiece}"/></td>
                     <td>
                         <span class="badge ${client.statut eq 'ACTIF' ? 'text-bg-success' : 'text-bg-secondary'}">
                             <c:out value="${client.statut.libelle}"/>

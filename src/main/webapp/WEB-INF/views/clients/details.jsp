@@ -76,9 +76,9 @@
                     <tbody>
                     <c:forEach var="compte" items="${comptes}">
                         <tr>
-                            <td><c:out value="${compte.numeroCompte}"/></td>
+                            <td class="cellule-chiffre"><c:out value="${compte.numeroCompte}"/></td>
                             <td><c:out value="${compte.type.libelle}"/></td>
-                            <td class="text-end">${mb:montant(compte.solde)}</td>
+                            <td class="text-end cellule-chiffre">${mb:montant(compte.solde)}</td>
                             <td>
                                 <span class="badge ${compte.statut eq 'ACTIF' ? 'text-bg-success' : 'text-bg-secondary'}">
                                     <c:out value="${compte.statut.libelle}"/>

@@ -10,46 +10,75 @@
     <link rel="stylesheet" href="${contexte}/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="${contexte}/assets/css/microbank.css">
 </head>
-<body>
+<body class="page-connexion">
 
-<div class="container" style="max-width: 420px; margin-top: 8vh;">
+<div class="container">
+    <div class="row justify-content-center align-items-center g-4 g-lg-5">
 
-    <div class="text-center mb-4">
-        <h1 class="h3 fw-bold" style="color: var(--microbank-bleu);">MICROBANK</h1>
-        <p class="text-muted">Espace agent</p>
-    </div>
+        <%-- Colonne de gauche : identite de l'institution. --%>
+        <div class="col-lg-6 d-none d-lg-block">
+            <p class="sous-marque mb-2">Institution de microfinance</p>
+            <h1 class="marque-connexion mb-3">MicroBank<span class="point">.</span></h1>
+            <p class="text-muted mb-4" style="max-width: 38ch;">
+                Gestion des clients, des comptes et des operations courantes.
+                Espace reserve aux agents et aux administrateurs.
+            </p>
 
-    <div class="card shadow-sm">
-        <div class="card-body p-4">
+            <dl class="row mb-0 liste-capacites" style="max-width: 26rem;">
+                <dt class="col-6">Guichet</dt>
+                <dd class="col-6 text-end">Depots &middot; Retraits</dd>
+                <dt class="col-6">Virements</dt>
+                <dd class="col-6 text-end">Compte a compte</dd>
+                <dt class="col-6">Releves</dt>
+                <dd class="col-6 text-end">PDF &middot; CSV</dd>
+            </dl>
+        </div>
 
-            <c:if test="${not empty erreurAuthentification}">
-                <div class="alert alert-danger" role="alert">
-                    <c:out value="${erreurAuthentification}"/>
+        <%-- Colonne de droite : formulaire de connexion. --%>
+        <div class="col-12 col-md-8 col-lg-5 offset-lg-1">
+
+            <div class="d-lg-none text-center mb-4">
+                <h1 class="marque-connexion">MicroBank<span class="point">.</span></h1>
+                <p class="sous-marque">Espace agent</p>
+            </div>
+
+            <div class="card carte-connexion">
+                <div class="card-body p-4 p-md-5">
+
+                    <h2 class="h5 mb-1">Connexion</h2>
+                    <p class="text-muted small mb-4">Identifiez-vous pour acceder au guichet.</p>
+
+                    <c:if test="${not empty erreurAuthentification}">
+                        <div class="alert alert-danger" role="alert">
+                            <c:out value="${erreurAuthentification}"/>
+                        </div>
+                    </c:if>
+
+                    <form method="post" action="${contexte}/login">
+                        <div class="mb-3">
+                            <label for="login" class="form-label">Login</label>
+                            <input type="text" class="form-control" id="login" name="login"
+                                   value="<c:out value='${login}'/>" required autofocus
+                                   autocomplete="username">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="motDePasse" class="form-label">Mot de passe</label>
+                            <input type="password" class="form-control" id="motDePasse"
+                                   name="motDePasse" required autocomplete="current-password">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+                    </form>
+
                 </div>
-            </c:if>
+            </div>
 
-            <form method="post" action="${contexte}/login">
-                <div class="mb-3">
-                    <label for="login" class="form-label">Login</label>
-                    <input type="text" class="form-control" id="login" name="login"
-                           value="<c:out value='${login}'/>" required autofocus>
-                </div>
-
-                <div class="mb-4">
-                    <label for="motDePasse" class="form-label">Mot de passe</label>
-                    <input type="password" class="form-control" id="motDePasse"
-                           name="motDePasse" required>
-                </div>
-
-                <button type="submit" class="btn btn-primary w-100">Se connecter</button>
-            </form>
-
+            <p class="text-center sous-marque mt-4 mb-0">
+                L3 IAGE &middot; 2025 / 2026
+            </p>
         </div>
     </div>
-
-    <p class="text-center text-muted small mt-4">
-        Projet de fin de module - L3 IAGE - 2025/2026
-    </p>
 </div>
 
 <script src="${contexte}/assets/js/bootstrap.bundle.min.js"></script>
