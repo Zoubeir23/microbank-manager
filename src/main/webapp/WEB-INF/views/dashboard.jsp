@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="mb" uri="http://microbank.isi.sn/functions" %>
 <c:set var="titrePage" value="Tableau de bord" scope="request"/>
 <c:set var="menuActif" value="dashboard" scope="request"/>
 <jsp:include page="layout/header.jsp"/>
@@ -20,7 +20,7 @@
             <div class="card-body">
                 <div class="text-muted">Clients</div>
                 <div class="valeur">
-                    <fmt:formatNumber value="${statistiques.nombreDeClients}" type="number"/>
+                    ${mb:nombre(statistiques.nombreDeClients)}
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@
             <div class="card-body">
                 <div class="text-muted">Comptes</div>
                 <div class="valeur">
-                    <fmt:formatNumber value="${statistiques.nombreDeComptes}" type="number"/>
+                    ${mb:nombre(statistiques.nombreDeComptes)}
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@
             <div class="card-body">
                 <div class="text-muted">Solde total</div>
                 <div class="valeur">
-                    <fmt:formatNumber value="${statistiques.soldeTotal}" pattern="#,##0"/>
+                    ${mb:montantArrondi(statistiques.soldeTotal)}
                 </div>
                 <div class="text-muted small">FCFA</div>
             </div>
@@ -54,7 +54,7 @@
             <div class="card-body">
                 <div class="text-muted">Operations du jour</div>
                 <div class="valeur">
-                    <fmt:formatNumber value="${statistiques.nombreOperationsDuJour}" type="number"/>
+                    ${mb:nombre(statistiques.nombreOperationsDuJour)}
                 </div>
             </div>
         </div>
@@ -70,15 +70,13 @@
                     <div class="col-6">
                         <div class="text-muted">Total des depots</div>
                         <div class="h4 montant-credit">
-                            <fmt:formatNumber value="${statistiques.totalDepotsDuJour}"
-                                              pattern="#,##0"/> FCFA
+                            ${mb:montantArrondi(statistiques.totalDepotsDuJour)} FCFA
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="text-muted">Total des retraits</div>
                         <div class="h4 montant-debit">
-                            <fmt:formatNumber value="${statistiques.totalRetraitsDuJour}"
-                                              pattern="#,##0"/> FCFA
+                            ${mb:montantArrondi(statistiques.totalRetraitsDuJour)} FCFA
                         </div>
                     </div>
                 </div>

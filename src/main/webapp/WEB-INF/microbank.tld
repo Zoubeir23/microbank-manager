@@ -23,6 +23,33 @@
     </function>
 
     <function>
+        <description>Formate un montant sans decimale : 125000.00 devient "125 000".</description>
+        <name>montantArrondi</name>
+        <function-class>sn.isi.iage.microbank.util.AmountFormatter</function-class>
+        <function-signature>
+            java.lang.String formaterMontantArrondi(java.math.BigDecimal)
+        </function-signature>
+    </function>
+
+    <function>
+        <description>Formate un nombre entier : 1250 devient "1 250".</description>
+        <name>nombre</name>
+        <function-class>sn.isi.iage.microbank.util.AmountFormatter</function-class>
+        <function-signature>
+            java.lang.String formaterNombre(long)
+        </function-signature>
+    </function>
+
+    <function>
+        <description>Numero d'affichage d'un client : 1 devient "C001".</description>
+        <name>numeroClient</name>
+        <function-class>sn.isi.iage.microbank.util.AmountFormatter</function-class>
+        <function-signature>
+            java.lang.String formaterNumeroClient(java.lang.Long)
+        </function-signature>
+    </function>
+
+    <function>
         <description>Formate une date au format jj/MM/aaaa.</description>
         <name>date</name>
         <function-class>sn.isi.iage.microbank.util.AmountFormatter</function-class>

@@ -50,7 +50,8 @@
             <tbody>
             <c:forEach var="client" items="${page.contenu}">
                 <tr>
-                    <td>C${client.id}</td>
+                    <%-- Numero d'affichage du client, au format C001 comme au §8. --%>
+                    <td>${mb:numeroClient(client.id)}</td>
                     <td><c:out value="${client.nom}"/></td>
                     <td><c:out value="${client.prenom}"/></td>
                     <td><c:out value="${client.telephone}"/></td>
