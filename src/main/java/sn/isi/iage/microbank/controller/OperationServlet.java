@@ -5,7 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import sn.isi.iage.microbank.dto.OperationSearchCriteria;
-import sn.isi.iage.microbank.entity.Operation;
+import sn.isi.iage.microbank.model.Operation;
 import sn.isi.iage.microbank.enums.TypeOperation;
 import sn.isi.iage.microbank.exception.BusinessRuleException;
 import sn.isi.iage.microbank.exception.ResourceNotFoundException;

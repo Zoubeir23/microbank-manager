@@ -5,7 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import sn.isi.iage.microbank.dto.UserForm;
-import sn.isi.iage.microbank.entity.User;
+import sn.isi.iage.microbank.model.User;
 import sn.isi.iage.microbank.enums.Role;
 import sn.isi.iage.microbank.enums.Statut;
 import sn.isi.iage.microbank.exception.BusinessRuleException;

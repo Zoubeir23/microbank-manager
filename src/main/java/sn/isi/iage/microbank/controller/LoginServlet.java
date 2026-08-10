@@ -5,7 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import sn.isi.iage.microbank.entity.User;
+import sn.isi.iage.microbank.model.User;
 import sn.isi.iage.microbank.exception.BusinessRuleException;
 import sn.isi.iage.microbank.service.AuthenticationService;
 import sn.isi.iage.microbank.util.SessionAttributes;

@@ -1,7 +1,7 @@
 package sn.isi.iage.microbank.dao;
 
 import jakarta.persistence.EntityManager;
-import sn.isi.iage.microbank.entity.ClientDocument;
+import sn.isi.iage.microbank.model.ClientDocument;
 
 import java.util.Optional;
 

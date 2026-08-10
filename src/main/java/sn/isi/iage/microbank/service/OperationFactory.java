@@ -1,8 +1,8 @@
 package sn.isi.iage.microbank.service;
 
-import sn.isi.iage.microbank.entity.Account;
-import sn.isi.iage.microbank.entity.Operation;
-import sn.isi.iage.microbank.entity.User;
+import sn.isi.iage.microbank.model.Account;
+import sn.isi.iage.microbank.model.Operation;
+import sn.isi.iage.microbank.model.User;
 import sn.isi.iage.microbank.enums.SensOperation;
 import sn.isi.iage.microbank.enums.TypeOperation;
 

@@ -7,7 +7,7 @@ import sn.isi.iage.microbank.dao.ClientDAO;
 import sn.isi.iage.microbank.dao.TransactionExecutor;
 import sn.isi.iage.microbank.dto.ClientForm;
 import sn.isi.iage.microbank.dto.PageResult;
-import sn.isi.iage.microbank.entity.Client;
+import sn.isi.iage.microbank.model.Client;
 import sn.isi.iage.microbank.enums.Statut;
 import sn.isi.iage.microbank.exception.BusinessRuleException;
 import sn.isi.iage.microbank.exception.ResourceNotFoundException;

@@ -5,7 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import sn.isi.iage.microbank.dto.ClientForm;
-import sn.isi.iage.microbank.entity.Client;
+import sn.isi.iage.microbank.model.Client;
 import sn.isi.iage.microbank.exception.BusinessRuleException;
 import sn.isi.iage.microbank.exception.ResourceNotFoundException;
 import sn.isi.iage.microbank.exception.ValidationException;

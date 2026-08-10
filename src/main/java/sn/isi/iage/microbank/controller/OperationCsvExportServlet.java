@@ -4,7 +4,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import sn.isi.iage.microbank.dto.OperationSearchCriteria;
-import sn.isi.iage.microbank.entity.Operation;
+import sn.isi.iage.microbank.model.Operation;
 import sn.isi.iage.microbank.service.OperationService;
 import sn.isi.iage.microbank.util.OperationCsvWriter;
 

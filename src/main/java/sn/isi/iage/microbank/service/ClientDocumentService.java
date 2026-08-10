@@ -4,8 +4,8 @@ import jakarta.persistence.EntityManagerFactory;
 import sn.isi.iage.microbank.dao.ClientDAO;
 import sn.isi.iage.microbank.dao.ClientDocumentDAO;
 import sn.isi.iage.microbank.dao.TransactionExecutor;
-import sn.isi.iage.microbank.entity.Client;
-import sn.isi.iage.microbank.entity.ClientDocument;
+import sn.isi.iage.microbank.model.Client;
+import sn.isi.iage.microbank.model.ClientDocument;
 import sn.isi.iage.microbank.exception.BusinessRuleException;
 import sn.isi.iage.microbank.exception.ResourceNotFoundException;
 

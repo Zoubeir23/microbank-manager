@@ -4,7 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.TypedQuery;
 import sn.isi.iage.microbank.dto.PageResult;
-import sn.isi.iage.microbank.entity.Account;
+import sn.isi.iage.microbank.model.Account;
 import sn.isi.iage.microbank.enums.StatutCompte;
 
 import java.math.BigDecimal;

@@ -4,8 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import sn.isi.iage.microbank.AbstractDatabaseTest;
-import sn.isi.iage.microbank.entity.Client;
-import sn.isi.iage.microbank.entity.ClientDocument;
+import sn.isi.iage.microbank.model.Client;
+import sn.isi.iage.microbank.model.ClientDocument;
 import sn.isi.iage.microbank.exception.BusinessRuleException;
 import sn.isi.iage.microbank.exception.ResourceNotFoundException;
 

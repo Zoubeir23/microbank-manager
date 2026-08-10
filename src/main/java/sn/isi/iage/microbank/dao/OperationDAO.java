@@ -4,7 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import sn.isi.iage.microbank.dto.OperationSearchCriteria;
 import sn.isi.iage.microbank.dto.PageResult;
-import sn.isi.iage.microbank.entity.Operation;
+import sn.isi.iage.microbank.model.Operation;
 import sn.isi.iage.microbank.enums.SensOperation;
 
 import java.math.BigDecimal;

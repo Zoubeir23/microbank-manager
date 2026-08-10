@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import sn.isi.iage.microbank.AbstractDatabaseTest;
 import sn.isi.iage.microbank.dto.UserForm;
-import sn.isi.iage.microbank.entity.User;
+import sn.isi.iage.microbank.model.User;
 import sn.isi.iage.microbank.enums.Role;
 import sn.isi.iage.microbank.enums.Statut;
 import sn.isi.iage.microbank.exception.BusinessRuleException;

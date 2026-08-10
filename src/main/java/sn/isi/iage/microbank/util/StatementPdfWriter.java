@@ -11,8 +11,8 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-import sn.isi.iage.microbank.entity.Account;
-import sn.isi.iage.microbank.entity.Operation;
+import sn.isi.iage.microbank.model.Account;
+import sn.isi.iage.microbank.model.Operation;
 
 import java.awt.Color;
 import java.io.OutputStream;

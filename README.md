@@ -142,7 +142,7 @@ src/main/java/sn/isi/iage/microbank/
 │                 User, StatementPdf, OperationCsvExport, ClientDocument
 ├── dao/          Couche d'acces aux donnees (repositories) + JpaUtil + TransactionExecutor
 ├── dto/          Objets de transport : PageResult, formulaires, criteres de recherche
-├── entity/       Entites JPA : User, Client, ClientDocument, Agency, Account, Operation
+├── model/        Entites JPA : User, Client, ClientDocument, Agency, Account, Operation
 ├── enums/        Role, Statut, TypeCompte, StatutCompte, TypeOperation, SensOperation
 ├── exception/    BusinessRuleException, ValidationException, ResourceNotFoundException
 ├── filter/       AuthenticationFilter, AdminAuthorizationFilter

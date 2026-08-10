@@ -2,9 +2,9 @@ package sn.isi.iage.microbank.util;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import sn.isi.iage.microbank.entity.Account;
-import sn.isi.iage.microbank.entity.Client;
-import sn.isi.iage.microbank.entity.Operation;
+import sn.isi.iage.microbank.model.Account;
+import sn.isi.iage.microbank.model.Client;
+import sn.isi.iage.microbank.model.Operation;
 import sn.isi.iage.microbank.enums.SensOperation;
 import sn.isi.iage.microbank.enums.StatutCompte;
 import sn.isi.iage.microbank.enums.TypeCompte;

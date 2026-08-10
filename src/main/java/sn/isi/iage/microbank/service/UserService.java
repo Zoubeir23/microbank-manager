@@ -6,7 +6,7 @@ import sn.isi.iage.microbank.dao.TransactionExecutor;
 import sn.isi.iage.microbank.dao.UserDAO;
 import sn.isi.iage.microbank.dto.PageResult;
 import sn.isi.iage.microbank.dto.UserForm;
-import sn.isi.iage.microbank.entity.User;
+import sn.isi.iage.microbank.model.User;
 import sn.isi.iage.microbank.enums.Role;
 import sn.isi.iage.microbank.enums.Statut;
 import sn.isi.iage.microbank.exception.BusinessRuleException;

@@ -9,12 +9,12 @@
          Les tests ne dependent donc d'aucun PostgreSQL demarre. -->
     <persistence-unit name="microbank-test-pu" transaction-type="RESOURCE_LOCAL">
 
-        <class>sn.isi.iage.microbank.entity.User</class>
-        <class>sn.isi.iage.microbank.entity.Client</class>
-        <class>sn.isi.iage.microbank.entity.ClientDocument</class>
-        <class>sn.isi.iage.microbank.entity.Agency</class>
-        <class>sn.isi.iage.microbank.entity.Account</class>
-        <class>sn.isi.iage.microbank.entity.Operation</class>
+        <class>sn.isi.iage.microbank.model.User</class>
+        <class>sn.isi.iage.microbank.model.Client</class>
+        <class>sn.isi.iage.microbank.model.ClientDocument</class>
+        <class>sn.isi.iage.microbank.model.Agency</class>
+        <class>sn.isi.iage.microbank.model.Account</class>
+        <class>sn.isi.iage.microbank.model.Operation</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
         <properties>

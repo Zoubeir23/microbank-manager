@@ -9,7 +9,7 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import sn.isi.iage.microbank.entity.User;
+import sn.isi.iage.microbank.model.User;
 import sn.isi.iage.microbank.util.SessionAttributes;
 
 import java.io.IOException;

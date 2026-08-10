@@ -3,7 +3,7 @@ package sn.isi.iage.microbank.service;
 import jakarta.persistence.EntityManagerFactory;
 import sn.isi.iage.microbank.dao.TransactionExecutor;
 import sn.isi.iage.microbank.dao.UserDAO;
-import sn.isi.iage.microbank.entity.User;
+import sn.isi.iage.microbank.model.User;
 import sn.isi.iage.microbank.exception.BusinessRuleException;
 import sn.isi.iage.microbank.util.PasswordHasher;
 

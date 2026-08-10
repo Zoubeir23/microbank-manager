@@ -7,10 +7,10 @@ import sn.isi.iage.microbank.AbstractDatabaseTest;
 import sn.isi.iage.microbank.dao.OperationDAO;
 import sn.isi.iage.microbank.dto.OperationSearchCriteria;
 import sn.isi.iage.microbank.dto.PageResult;
-import sn.isi.iage.microbank.entity.Account;
-import sn.isi.iage.microbank.entity.Client;
-import sn.isi.iage.microbank.entity.Operation;
-import sn.isi.iage.microbank.entity.User;
+import sn.isi.iage.microbank.model.Account;
+import sn.isi.iage.microbank.model.Client;
+import sn.isi.iage.microbank.model.Operation;
+import sn.isi.iage.microbank.model.User;
 import sn.isi.iage.microbank.enums.StatutCompte;
 import sn.isi.iage.microbank.enums.TypeOperation;
 

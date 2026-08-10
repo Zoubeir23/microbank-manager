@@ -16,7 +16,7 @@ Deadline : 25 août 2026.
 
 ### Conventions héritées des TP du module (à respecter)
 - `groupId` = `sn.isi.iage`, packages `sn.isi.iage.*`
-- Packages `entity`, `repository`, `enums`
+- Packages `entity`, `repository`, `enums` (renommes ici en `model` et `dao` pour coller au §23 du sujet)
 - Lombok (`@Getter/@Setter/@SuperBuilder/@NoArgsConstructor`)
 - `BaseEntity` `@MappedSuperclass` : `id`, `createdAt`, `updatedAt`, `@PrePersist/@PreUpdate`
 - Hibernate ORM 7.3.4.Final, driver PostgreSQL 42.7.3

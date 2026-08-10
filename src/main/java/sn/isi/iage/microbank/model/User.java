@@ -1,4 +1,4 @@
-package sn.isi.iage.microbank.entity;
+package sn.isi.iage.microbank.model;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

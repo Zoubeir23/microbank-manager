@@ -3,7 +3,7 @@ package sn.isi.iage.microbank.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import sn.isi.iage.microbank.dto.PageResult;
-import sn.isi.iage.microbank.entity.Client;
+import sn.isi.iage.microbank.model.Client;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,6 +1,6 @@
 package sn.isi.iage.microbank.util;
 
-import sn.isi.iage.microbank.entity.Operation;
+import sn.isi.iage.microbank.model.Operation;
 
 import java.io.PrintWriter;
 import java.util.List;
