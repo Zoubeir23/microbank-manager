@@ -16,3 +16,6 @@ target/
 *.log
 
 uploads/
+
+# Artefacts de tests navigateur
+.playwright-mcp/
