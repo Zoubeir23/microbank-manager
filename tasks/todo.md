@@ -62,61 +62,73 @@ Agency 1 ───* Account          (bonus 4)
 ### Phase 0 — Socle
 - [x] 0.1 Analyse du terrain et des conventions du module
 - [x] 0.2 Plan (ce fichier)
-- [ ] 0.3 Spike : vérifier que les JSP compilent sur ce poste (JDK 26)
-- [ ] 0.4 `pom.xml`, arborescence Maven webapp, `.gitignore`
+- [x] 0.3 Spike : vérifier que les JSP compilent sur ce poste (JDK 26)
+- [x] 0.4 `pom.xml`, arborescence Maven webapp, `.gitignore`
 
 ### Phase 1 — Persistance
-- [ ] 1.1 `enums` : Role, Statut, TypeCompte, StatutCompte, TypeOperation, SensOperation
-- [ ] 1.2 `BaseEntity`
-- [ ] 1.3 Entités : User, Client, Account, Operation, ClientDocument, Agency
-- [ ] 1.4 `persistence.xml` (unité principale + unité de test H2)
-- [ ] 1.5 `JpaUtil` + exécuteur de transaction (`begin/commit/rollback`)
-- [ ] 1.6 `database.sql` (schéma + jeu de données + comptes de test)
+- [x] 1.1 `enums` : Role, Statut, TypeCompte, StatutCompte, TypeOperation, SensOperation
+- [x] 1.2 `BaseEntity`
+- [x] 1.3 Entités : User, Client, Account, Operation, ClientDocument, Agency
+- [x] 1.4 `persistence.xml` (unité principale + unité de test H2)
+- [x] 1.5 `JpaUtil` + exécuteur de transaction (`begin/commit/rollback`)
+- [x] 1.6 `database.sql` (schéma + jeu de données + comptes de test)
 
 ### Phase 2 — DAO
-- [ ] 2.1 `PageResult<T>` (immutable)
-- [ ] 2.2 `UserDAO`
-- [ ] 2.3 `ClientDAO` (recherche + pagination JPA)
-- [ ] 2.4 `AccountDAO`
-- [ ] 2.5 `OperationDAO` (filtres combinés + pagination JPA)
-- [ ] 2.6 `DashboardDAO` (agrégats)
+- [x] 2.1 `PageResult<T>` (immutable)
+- [x] 2.2 `UserDAO`
+- [x] 2.3 `ClientDAO` (recherche + pagination JPA)
+- [x] 2.4 `AccountDAO`
+- [x] 2.5 `OperationDAO` (filtres combinés + pagination JPA)
+- [x] 2.6 `DashboardDAO` (agrégats)
 
 ### Phase 3 — Services (règles métier + transactions)
-- [ ] 3.1 `PasswordHasher` + `AuthenticationService`
-- [ ] 3.2 `ClientService` (validation formulaire)
-- [ ] 3.3 `AccountService` (numéro de compte unique, dépôt initial)
-- [ ] 3.4 `OperationService` : dépôt, retrait, virement — 1 transaction, rollback
-- [ ] 3.5 `UserService` (admin : CRUD + activer/désactiver)
-- [ ] 3.6 `DashboardService`
+- [x] 3.1 `PasswordHasher` + `AuthenticationService`
+- [x] 3.2 `ClientService` (validation formulaire)
+- [x] 3.3 `AccountService` (numéro de compte unique, dépôt initial)
+- [x] 3.4 `OperationService` : dépôt, retrait, virement — 1 transaction, rollback
+- [x] 3.5 `UserService` (admin : CRUD + activer/désactiver)
+- [x] 3.6 `DashboardService`
 
 ### Phase 4 — Web (contrôleurs)
-- [ ] 4.1 `AuthenticationFilter` + `AdminAuthorizationFilter`
-- [ ] 4.2 `LoginServlet`, `LogoutServlet`
-- [ ] 4.3 `DashboardServlet`
-- [ ] 4.4 `ClientServlet` (list/search/pagination/create/update/delete/details)
-- [ ] 4.5 `AccountServlet`
-- [ ] 4.6 `OperationServlet` (deposit/withdraw/transfer/history/filtres)
-- [ ] 4.7 `StatementPdfServlet` + `OperationCsvExportServlet`
-- [ ] 4.8 `UserServlet` (admin)
-- [ ] 4.9 `ClientDocumentServlet` (upload, bonus 1)
+- [x] 4.1 `AuthenticationFilter` + `AdminAuthorizationFilter`
+- [x] 4.2 `LoginServlet`, `LogoutServlet`
+- [x] 4.3 `DashboardServlet`
+- [x] 4.4 `ClientServlet` (list/search/pagination/create/update/delete/details)
+- [x] 4.5 `AccountServlet`
+- [x] 4.6 `OperationServlet` (deposit/withdraw/transfer/history/filtres)
+- [x] 4.7 `StatementPdfServlet` + `OperationCsvExportServlet`
+- [x] 4.8 `UserServlet` (admin)
+- [x] 4.9 `ClientDocumentServlet` (upload, bonus 1)
 
 ### Phase 5 — Vues
-- [ ] 5.1 Assets Bootstrap 5 + layout (header/footer/navbar/messages)
-- [ ] 5.2 `login.jsp`, `dashboard.jsp`
-- [ ] 5.3 `clients/` list, form, details
-- [ ] 5.4 `accounts/` list, form, details
-- [ ] 5.5 `operations/` list, deposit, withdraw, transfer, statement imprimable
-- [ ] 5.6 `users/` list, form
-- [ ] 5.7 `error.jsp` + pages 403/404
+- [x] 5.1 Assets Bootstrap 5 + layout (header/footer/navbar/messages)
+- [x] 5.2 `login.jsp`, `dashboard.jsp`
+- [x] 5.3 `clients/` list, form, details
+- [x] 5.4 `accounts/` list, form, details
+- [x] 5.5 `operations/` list, deposit, withdraw, transfer, statement imprimable
+- [x] 5.6 `users/` list, form
+- [x] 5.7 `error.jsp` + pages 403/404
 
 ### Phase 6 — Vérification
-- [ ] 6.1 Tests unitaires règles métier (dépôt/retrait/virement, rollback)
-- [ ] 6.2 Tests DAO (recherche, pagination, filtres)
-- [ ] 6.3 `mvn test` vert
-- [ ] 6.4 Lancement réel + parcours complet dans le navigateur
-- [ ] 6.5 `README.md` + `docs/documentation.md` (2 pages)
+- [x] 6.1 Tests unitaires règles métier (dépôt/retrait/virement, rollback)
+- [x] 6.2 Tests DAO (recherche, pagination, filtres)
+- [x] 6.3 `mvn test` vert
+- [x] 6.4 Lancement réel + parcours complet dans le navigateur
+- [x] 6.5 `README.md` + `docs/documentation.md` (2 pages)
 
-## 5. Risques et parade
+## 5. Etat final
+
+Toutes les etapes sont realisees et verifiees :
+
+- `mvn test` : **83 tests verts** (base H2 en memoire, aucun PostgreSQL requis).
+- Parcours fonctionnel complet execute contre l'application demarree : **32 verifications
+  passantes** (connexion, CRUD client, recherche, pagination, ouverture de compte, depot,
+  retrait, virement, refus au solde insuffisant sans modification des comptes, filtres,
+  export CSV, releve PDF, tableau de bord, droits ADMIN, CSRF, deconnexion).
+- `database.sql` rejoue sur une base vierge, puis valide par Hibernate en mode `validate`.
+- `mvn package` produit `target/microbank.war` deployable sur Tomcat 10.1.
+
+## 6. Risques et parade
 
 | Risque | Parade |
 |---|---|
