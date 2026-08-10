@@ -4,7 +4,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -12,6 +11,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 /**
  * Copie numerisee de la piece d'identite d'un client (bonus 1).
@@ -41,7 +42,12 @@ public class ClientDocument extends BaseEntity {
     @Column(name = "taille_octets", nullable = false)
     private long tailleOctets;
 
-    @Lob
+    /**
+     * Contenu binaire du fichier, stocke dans une colonne bytea.
+     * On evite volontairement {@code @Lob} : sur PostgreSQL il produit une colonne oid,
+     * c'est-a-dire un "large object" externe qui n'est pas supprime avec la ligne.
+     */
+    @JdbcTypeCode(SqlTypes.VARBINARY)
     @Column(nullable = false)
     private byte[] contenu;
 }
