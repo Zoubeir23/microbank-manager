@@ -44,7 +44,7 @@ public class ClientService {
 
     public Client consulter(Long id) {
         return transactionExecutor.executeQuery(entityManager ->
-                clientDAO.findById(entityManager, id)
+                clientDAO.findByIdAvecDocument(entityManager, id)
                         .orElseThrow(() -> new ResourceNotFoundException(
                                 "Client introuvable (identifiant " + id + ")")));
     }

@@ -36,4 +36,35 @@ public record OperationSearchCriteria(
     public boolean aUnePeriode() {
         return dateDebut != null || dateFin != null;
     }
+
+    // Accesseurs au format JavaBean : le langage d'expression des JSP (EL) reconnait
+    // getXxx(), pas les accesseurs de record xxx().
+
+    public Long getCompteId() {
+        return compteId;
+    }
+
+    public Long getClientId() {
+        return clientId;
+    }
+
+    public TypeOperation getType() {
+        return type;
+    }
+
+    public LocalDate getDateDebut() {
+        return dateDebut;
+    }
+
+    public LocalDate getDateFin() {
+        return dateFin;
+    }
+
+    public BigDecimal getMontantMinimum() {
+        return montantMinimum;
+    }
+
+    public BigDecimal getMontantMaximum() {
+        return montantMaximum;
+    }
 }

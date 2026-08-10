@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import sn.isi.iage.microbank.dto.PageResult;
 import sn.isi.iage.microbank.entity.User;
+import sn.isi.iage.microbank.util.CsrfTokenManager;
 import sn.isi.iage.microbank.util.SessionAttributes;
 import sn.isi.iage.microbank.util.ValueParser;
 
@@ -23,9 +24,14 @@ public abstract class BaseServlet extends HttpServlet {
 
     protected static final String DOSSIER_DES_VUES = "/WEB-INF/views/";
 
-    /** Affiche une JSP. Le nom est relatif au dossier des vues, sans extension. */
+    /**
+     * Affiche une JSP. Le nom est relatif au dossier des vues, sans extension.
+     * Le jeton anti-CSRF est expose a la vue afin que chaque formulaire puisse l'inclure.
+     */
     protected void afficher(HttpServletRequest request, HttpServletResponse response, String vue)
             throws ServletException, IOException {
+        request.setAttribute(CsrfTokenManager.NOM_DU_CHAMP,
+                CsrfTokenManager.obtenirOuCreerJeton(request.getSession()));
         request.getRequestDispatcher(DOSSIER_DES_VUES + vue + ".jsp").forward(request, response);
     }
 

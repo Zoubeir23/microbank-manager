@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="https://jakarta.ee/xml/ns/jakartaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+        https://jakarta.ee/xml/ns/jakartaee/web-jsptaglibrary_3_0.xsd"
+        version="3.0">
+
+    <description>
+        Fonctions de mise en forme utilisees dans les JSP. Elles evitent d'ecrire du
+        code Java dans les vues : les JSP se contentent d'appeler une fonction.
+    </description>
+    <tlib-version>1.0</tlib-version>
+    <short-name>mb</short-name>
+    <uri>http://microbank.isi.sn/functions</uri>
+
+    <function>
+        <description>Formate un montant : 125000.5 devient "125 000,50".</description>
+        <name>montant</name>
+        <function-class>sn.isi.iage.microbank.util.AmountFormatter</function-class>
+        <function-signature>
+            java.lang.String formaterMontant(java.math.BigDecimal)
+        </function-signature>
+    </function>
+
+    <function>
+        <description>Formate une date au format jj/MM/aaaa.</description>
+        <name>date</name>
+        <function-class>sn.isi.iage.microbank.util.AmountFormatter</function-class>
+        <function-signature>
+            java.lang.String formaterDate(java.time.LocalDate)
+        </function-signature>
+    </function>
+
+    <function>
+        <description>Formate une date et une heure au format jj/MM/aaaa HH:mm.</description>
+        <name>dateHeure</name>
+        <function-class>sn.isi.iage.microbank.util.AmountFormatter</function-class>
+        <function-signature>
+            java.lang.String formaterDateHeure(java.time.LocalDateTime)
+        </function-signature>
+    </function>
+
+</taglib>

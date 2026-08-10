@@ -1,0 +1,72 @@
+/* Habillage propre a MicroBank, en complement de Bootstrap. */
+
+:root {
+    --microbank-bleu: #0d47a1;
+    --microbank-bleu-clair: #e8eefb;
+}
+
+body {
+    background-color: #f5f6fa;
+}
+
+.navbar-microbank {
+    background-color: var(--microbank-bleu);
+}
+
+.navbar-microbank .navbar-brand,
+.navbar-microbank .nav-link {
+    color: #ffffff;
+}
+
+.navbar-microbank .nav-link.actif {
+    font-weight: 600;
+    border-bottom: 2px solid #ffffff;
+}
+
+.carte-statistique {
+    border-left: 4px solid var(--microbank-bleu);
+}
+
+.carte-statistique .valeur {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--microbank-bleu);
+}
+
+.montant-credit {
+    color: #1b7f3b;
+    font-weight: 600;
+}
+
+.montant-debit {
+    color: #b3261e;
+    font-weight: 600;
+}
+
+.tableau-donnees th {
+    background-color: var(--microbank-bleu-clair);
+    white-space: nowrap;
+}
+
+.pied-de-page {
+    color: #6c757d;
+    font-size: 0.875rem;
+}
+
+/* Version imprimable du releve (bonus 5) : on masque tout ce qui n'est pas le contenu. */
+@media print {
+    .navbar,
+    .zone-non-imprimable,
+    .pagination,
+    form {
+        display: none !important;
+    }
+
+    body {
+        background-color: #ffffff;
+    }
+
+    .card {
+        border: none !important;
+    }
+}

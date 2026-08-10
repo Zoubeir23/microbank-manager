@@ -29,6 +29,25 @@ public record PageResult<T>(List<T> contenu, int numeroPage, int taillePage, lon
         return new PageResult<>(List.of(), numeroPage, taillePage, 0L);
     }
 
+    // Accesseurs au format JavaBean : le langage d'expression des JSP (EL) reconnait
+    // getXxx(), pas les accesseurs de record xxx().
+
+    public List<T> getContenu() {
+        return contenu;
+    }
+
+    public int getNumeroPage() {
+        return numeroPage;
+    }
+
+    public int getTaillePage() {
+        return taillePage;
+    }
+
+    public long getTotalElements() {
+        return totalElements;
+    }
+
     public int getTotalPages() {
         if (taillePage <= 0) {
             return 0;

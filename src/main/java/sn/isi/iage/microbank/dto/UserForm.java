@@ -21,4 +21,31 @@ public record UserForm(
     public boolean demandeChangementDeMotDePasse() {
         return motDePasse != null && !motDePasse.isBlank();
     }
+
+    // Accesseurs au format JavaBean : le langage d'expression des JSP (EL) reconnait
+    // getXxx(), pas les accesseurs de record xxx().
+
+    public String getId() {
+        return id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public String getStatut() {
+        return statut;
+    }
 }

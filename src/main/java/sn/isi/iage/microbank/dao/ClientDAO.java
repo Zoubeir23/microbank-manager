@@ -30,6 +30,20 @@ public class ClientDAO {
         return Optional.ofNullable(entityManager.find(Client.class, id));
     }
 
+    /**
+     * Client avec sa piece d'identite deja chargee.
+     * Sans ce JOIN FETCH, la JSP tenterait de lire le document apres la fermeture de
+     * l'EntityManager et declencherait une LazyInitializationException.
+     */
+    public Optional<Client> findByIdAvecDocument(EntityManager entityManager, Long id) {
+        return entityManager.createQuery(
+                        "SELECT c FROM Client c LEFT JOIN FETCH c.document WHERE c.id = :id",
+                        Client.class)
+                .setParameter("id", id)
+                .getResultStream()
+                .findFirst();
+    }
+
     public Optional<Client> findByNumeroPiece(EntityManager entityManager, String numeroPiece) {
         return entityManager.createQuery(
                         "SELECT c FROM Client c WHERE LOWER(c.numeroPiece) = LOWER(:numeroPiece)",
