@@ -120,7 +120,7 @@ Agency 1 ───* Account          (bonus 4)
 
 Toutes les etapes sont realisees et verifiees :
 
-- `mvn test` : **83 tests verts** (base H2 en memoire, aucun PostgreSQL requis).
+- `mvn test` : **89 tests verts** (base H2 en memoire, aucun PostgreSQL requis).
 - Parcours fonctionnel complet execute contre l'application demarree : **32 verifications
   passantes** (connexion, CRUD client, recherche, pagination, ouverture de compte, depot,
   retrait, virement, refus au solde insuffisant sans modification des comptes, filtres,

@@ -126,10 +126,11 @@ deux comptes (`DatabaseSeedListener`).
 mvn test
 ```
 
-55 tests automatises s'executent sur une base H2 en memoire : aucun PostgreSQL n'est
+89 tests automatises s'executent sur une base H2 en memoire : aucun PostgreSQL n'est
 necessaire pour les lancer. Ils couvrent les regles metier (§15), le comportement
 transactionnel et le rollback (§16), la recherche, la pagination, les filtres de
-l'historique et l'authentification.
+l'historique, l'authentification, la mise en forme des montants, l'export CSV
+et la generation du releve PDF.
 
 ---
 
