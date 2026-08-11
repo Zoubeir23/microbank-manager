@@ -10,16 +10,17 @@
     <link rel="stylesheet" href="${contexte}/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="${contexte}/assets/css/microbank.css">
 </head>
-<body class="page-connexion">
+<body class="corps-connexion">
 
-<div class="container">
-    <div class="row justify-content-center align-items-center g-4 g-lg-5">
+<div class="ecran-connexion">
 
-        <%-- Colonne de gauche : identite de l'institution. --%>
-        <div class="col-lg-6 d-none d-lg-block">
+    <%-- Panneau noir : identite de l'institution. Masque sur mobile pour laisser
+         toute la place au formulaire. --%>
+    <div class="panneau-marque d-none d-lg-flex">
+        <div>
             <p class="sous-marque mb-2">Institution de microfinance</p>
             <h1 class="marque-connexion mb-3">MicroBank<span class="point">.</span></h1>
-            <p class="text-muted mb-4" style="max-width: 38ch;">
+            <p class="mb-5" style="max-width: 34ch; color: rgba(255,255,255,.65);">
                 Gestion des clients, des comptes et des operations courantes.
                 Espace reserve aux agents et aux administrateurs.
             </p>
@@ -33,52 +34,51 @@
                 <dd class="col-6 text-end">PDF &middot; CSV</dd>
             </dl>
         </div>
+    </div>
 
-        <%-- Colonne de droite : formulaire de connexion. --%>
-        <div class="col-12 col-md-8 col-lg-5 offset-lg-1">
+    <%-- Panneau blanc : formulaire de connexion. --%>
+    <div class="panneau-formulaire">
+        <div class="formulaire-connexion">
 
             <div class="d-lg-none text-center mb-4">
-                <h1 class="marque-connexion">MicroBank<span class="point">.</span></h1>
-                <p class="sous-marque">Espace agent</p>
+                <h1 class="marque-connexion" style="color: var(--noir);">
+                    MicroBank<span class="point" style="color: var(--gris);">.</span>
+                </h1>
+                <p class="sous-marque" style="color: var(--gris);">Espace agent</p>
             </div>
 
-            <div class="card carte-connexion">
-                <div class="card-body p-4 p-md-5">
+            <h2 class="h4 mb-1">Connexion</h2>
+            <p class="text-muted small mb-4">Identifiez-vous pour acceder au guichet.</p>
 
-                    <h2 class="h5 mb-1">Connexion</h2>
-                    <p class="text-muted small mb-4">Identifiez-vous pour acceder au guichet.</p>
-
-                    <c:if test="${not empty erreurAuthentification}">
-                        <div class="alert alert-danger" role="alert">
-                            <c:out value="${erreurAuthentification}"/>
-                        </div>
-                    </c:if>
-
-                    <form method="post" action="${contexte}/login">
-                        <div class="mb-3">
-                            <label for="login" class="form-label">Login</label>
-                            <input type="text" class="form-control" id="login" name="login"
-                                   value="<c:out value='${login}'/>" required autofocus
-                                   autocomplete="username">
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="motDePasse" class="form-label">Mot de passe</label>
-                            <input type="password" class="form-control" id="motDePasse"
-                                   name="motDePasse" required autocomplete="current-password">
-                        </div>
-
-                        <button type="submit" class="btn btn-primary w-100">Se connecter</button>
-                    </form>
-
+            <c:if test="${not empty erreurAuthentification}">
+                <div class="alert alert-danger" role="alert">
+                    <c:out value="${erreurAuthentification}"/>
                 </div>
-            </div>
+            </c:if>
 
-            <p class="text-center sous-marque mt-4 mb-0">
+            <form method="post" action="${contexte}/login">
+                <div class="mb-3">
+                    <label for="login" class="form-label">Login</label>
+                    <input type="text" class="form-control" id="login" name="login"
+                           value="<c:out value='${login}'/>" required autofocus
+                           autocomplete="username">
+                </div>
+
+                <div class="mb-4">
+                    <label for="motDePasse" class="form-label">Mot de passe</label>
+                    <input type="password" class="form-control" id="motDePasse"
+                           name="motDePasse" required autocomplete="current-password">
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+            </form>
+
+            <p class="text-center sous-marque mt-4 mb-0" style="color: var(--gris);">
                 L3 IAGE &middot; 2025 / 2026
             </p>
         </div>
     </div>
+
 </div>
 
 <script src="${contexte}/assets/js/bootstrap.bundle.min.js"></script>
