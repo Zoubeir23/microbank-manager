@@ -36,7 +36,7 @@ public class ClientDocumentService {
 
     public ClientDocument enregistrer(Long clientId, String nomFichier, String typeContenu,
                                       byte[] contenu) {
-        valider(nomFichier, typeContenu, contenu);
+        validerFichier(nomFichier, typeContenu, contenu);
 
         return transactionExecutor.executeInTransaction(entityManager -> {
             Client client = clientDAO.findById(entityManager, clientId)
@@ -62,7 +62,12 @@ public class ClientDocumentService {
                 clientDocumentDAO.findByClientId(entityManager, clientId));
     }
 
-    private void valider(String nomFichier, String typeContenu, byte[] contenu) {
+    /**
+     * Verifie un fichier avant tout envoi en base.
+     * Publique pour que {@code ClientServlet} puisse valider la piece jointe optionnelle
+     * du formulaire client avant meme de savoir si le client sera cree ou modifie.
+     */
+    public void validerFichier(String nomFichier, String typeContenu, byte[] contenu) {
         if (contenu == null || contenu.length == 0) {
             throw new BusinessRuleException("Aucun fichier n'a ete envoye.");
         }

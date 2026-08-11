@@ -218,9 +218,9 @@ src/main/webapp/
 | GET | `/logout` | Deconnexion |
 | GET | `/dashboard` | Tableau de bord |
 | GET | `/clients?search=&page=0&size=10` | Liste, recherche et pagination |
-| POST | `/clients/create`, `/clients/update` | Creation et modification |
+| POST | `/clients/create`, `/clients/update` | Creation et modification (formulaire multipart, piece d'identite optionnelle en meme temps) |
 | GET | `/clients/details?id=`, `/clients/delete?id=` | Consultation et suppression |
-| POST / GET | `/clients/document` | Depot et consultation de la piece d'identite |
+| GET | `/clients/document?clientId=` | Consultation de la piece d'identite jointe |
 | GET | `/accounts`, `/accounts/details?id=` | Comptes |
 | POST | `/accounts/create`, `/accounts/statut` | Ouverture, changement de statut |
 | POST | `/operations/deposit`, `/withdraw`, `/transfer` | Operations bancaires |

@@ -1,32 +1,48 @@
 package sn.isi.iage.microbank.controller;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import sn.isi.iage.microbank.dto.ClientForm;
 import sn.isi.iage.microbank.model.Client;
 import sn.isi.iage.microbank.exception.BusinessRuleException;
 import sn.isi.iage.microbank.exception.ResourceNotFoundException;
 import sn.isi.iage.microbank.exception.ValidationException;
 import sn.isi.iage.microbank.service.AccountService;
+import sn.isi.iage.microbank.service.ClientDocumentService;
 import sn.isi.iage.microbank.service.ClientService;
 import sn.isi.iage.microbank.util.SessionAttributes;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
 
 /**
- * Gestion des clients (§7 a §10).
+ * Gestion des clients (§7 a §10) et de leur piece d'identite jointe (bonus 1).
  * <p>
  * Une seule servlet dessert toutes les URL de la ressource client ; l'action est
  * lue dans le chemin : /clients, /clients/create, /clients/update, /clients/delete,
- * /clients/details.
+ * /clients/details. Le formulaire de creation et de modification est multipart :
+ * il porte a la fois les champs texte du client et, en option, le fichier de sa
+ * piece d'identite.
  */
 @WebServlet(name = "clientServlet", urlPatterns = {"/clients", "/clients/*"})
+@MultipartConfig(
+        fileSizeThreshold = 512 * 1024,
+        maxFileSize = ClientServlet.TAILLE_MAXIMALE_FICHIER,
+        maxRequestSize = ClientServlet.TAILLE_MAXIMALE_REQUETE)
 public class ClientServlet extends BaseServlet {
+
+    static final long TAILLE_MAXIMALE_FICHIER = 2L * 1024 * 1024;
+    static final long TAILLE_MAXIMALE_REQUETE = 3L * 1024 * 1024;
 
     private final transient ClientService clientService = new ClientService();
     private final transient AccountService accountService = new AccountService();
+    private final transient ClientDocumentService clientDocumentService =
+            new ClientDocumentService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -48,16 +64,55 @@ public class ClientServlet extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ClientForm formulaire = lireFormulaire(request);
+        ClientForm formulaire = null;
+
         try {
+            // La lecture des champs texte declenche elle aussi l'analyse du corps
+            // multipart : si le fichier joint depasse la taille maximale, c'est ici,
+            // avant meme d'atteindre le fichier lui-meme, que le conteneur peut lever
+            // IllegalStateException. D'ou ce bloc unique couvrant formulaire et fichier.
+            formulaire = lireFormulaire(request);
+            Part fichier = lireFichierEnvoye(request);
+            byte[] contenuDuFichier = null;
+
+            if (fichier != null) {
+                try (InputStream fluxDEntree = fichier.getInputStream()) {
+                    contenuDuFichier = fluxDEntree.readAllBytes();
+                }
+                // La piece jointe est verifiee avant meme d'enregistrer le client :
+                // un fichier invalide ne doit pas laisser un client a moitie enregistre.
+                clientDocumentService.validerFichier(
+                        nomDeFichierSecurise(fichier), fichier.getContentType(), contenuDuFichier);
+            }
+
             Client client = clientService.enregistrer(formulaire);
+
+            if (fichier != null) {
+                clientDocumentService.enregistrer(client.getId(),
+                        nomDeFichierSecurise(fichier), fichier.getContentType(), contenuDuFichier);
+            }
+
             definirMessageSucces(request, formulaire.estCreation()
                     ? "Client cree avec succes."
                     : "Client mis a jour avec succes.");
             rediriger(request, response, "/clients/details?id=" + client.getId());
+
         } catch (ValidationException formulaireInvalide) {
             request.setAttribute(SessionAttributes.ERREURS_DE_VALIDATION,
                     formulaireInvalide.getErreursParChamp());
+            request.setAttribute("formulaire", formulaire);
+            afficher(request, response, "clients/form");
+        } catch (BusinessRuleException documentInvalide) {
+            request.setAttribute(SessionAttributes.ERREURS_DE_VALIDATION,
+                    Map.of("document", documentInvalide.getMessage()));
+            request.setAttribute("formulaire", formulaire);
+            afficher(request, response, "clients/form");
+        } catch (IllegalStateException fichierTropVolumineux) {
+            // Requete rejetee par le conteneur avant analyse complete : les champs
+            // texte, eventuellement lus, restent utilisables pour reafficher le
+            // formulaire tel que l'utilisateur l'avait rempli.
+            request.setAttribute(SessionAttributes.ERREURS_DE_VALIDATION,
+                    Map.of("document", "Le fichier depasse la taille maximale autorisee (2 Mo)."));
             request.setAttribute("formulaire", formulaire);
             afficher(request, response, "clients/form");
         }
@@ -87,6 +142,8 @@ public class ClientServlet extends BaseServlet {
             throws ServletException, IOException {
         Client client = clientService.consulter(parametreIdentifiant(request, "id"));
         request.setAttribute("formulaire", versFormulaire(client));
+        clientDocumentService.consulterParClient(client.getId())
+                .ifPresent(document -> request.setAttribute("documentActuel", document));
         afficher(request, response, "clients/form");
     }
 
@@ -133,5 +190,25 @@ public class ClientServlet extends BaseServlet {
                 client.getAdresse(),
                 client.getNumeroPiece(),
                 client.getStatut().name());
+    }
+
+    /**
+     * La piece jointe est facultative : un champ vide, ou meme un formulaire soumis
+     * sans encodage multipart, ne doivent pas etre traites comme une erreur.
+     * {@code getPart} leve une exception si la requete n'est pas multipart ; dans ce
+     * cas, il n'y a simplement pas de fichier a lire.
+     * <p>
+     * Si le fichier ou la requete depasse la taille maximale autorisee (voir
+     * {@code @MultipartConfig}), le conteneur leve {@code IllegalStateException} ;
+     * elle n'est pas interceptee ici mais dans {@code doPost}, qui gere aussi le cas
+     * ou cette meme exception survient plus tot, lors de la lecture des champs texte.
+     */
+    private Part lireFichierEnvoye(HttpServletRequest request) {
+        try {
+            Part fichier = request.getPart("document");
+            return fichier == null || fichier.getSize() == 0 ? null : fichier;
+        } catch (ServletException | IOException requeteNonMultipart) {
+            return null;
+        }
     }
 }

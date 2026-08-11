@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 import sn.isi.iage.microbank.dto.PageResult;
 import sn.isi.iage.microbank.model.User;
 import sn.isi.iage.microbank.util.CsrfTokenManager;
@@ -23,6 +24,7 @@ import java.io.IOException;
 public abstract class BaseServlet extends HttpServlet {
 
     protected static final String DOSSIER_DES_VUES = "/WEB-INF/views/";
+    private static final int LONGUEUR_MAXIMALE_NOM_FICHIER = 255;
 
     /**
      * Affiche une JSP. Le nom est relatif au dossier des vues, sans extension.
@@ -78,5 +80,34 @@ public abstract class BaseServlet extends HttpServlet {
         String cheminSupplementaire = request.getPathInfo();
         return cheminSupplementaire == null || cheminSupplementaire.isBlank()
                 ? "/" : cheminSupplementaire;
+    }
+
+    /**
+     * Ne conserve que le nom du fichier envoye par le navigateur, sans son chemin
+     * (un navigateur peut soumettre "../../etc/passwd" comme nom de fichier) et sans
+     * caractere pouvant casser l'en-tete HTTP Content-Disposition lors du telechargement
+     * (voir ClientDocumentServlet). Le decoupage du chemin est fait a la main plutot
+     * qu'avec {@code Paths.get(...).getFileName()}, qui renvoie null pour des entrees
+     * comme "/" ou "\\" seuls.
+     */
+    protected String nomDeFichierSecurise(Part fichier) {
+        String nomSoumis = fichier.getSubmittedFileName();
+        if (nomSoumis == null) {
+            return "piece-identite";
+        }
+
+        String nomNormalise = nomSoumis.replace('\\', '/');
+        int dernierSeparateur = nomNormalise.lastIndexOf('/');
+        String nomSansChemin = dernierSeparateur < 0
+                ? nomNormalise
+                : nomNormalise.substring(dernierSeparateur + 1);
+        String nomAssaini = nomSansChemin.replaceAll("[^A-Za-z0-9._-]", "_");
+
+        if (nomAssaini.isBlank() || nomAssaini.equals(".") || nomAssaini.equals("..")) {
+            return "piece-identite";
+        }
+        return nomAssaini.length() > LONGUEUR_MAXIMALE_NOM_FICHIER
+                ? nomAssaini.substring(0, LONGUEUR_MAXIMALE_NOM_FICHIER)
+                : nomAssaini;
     }
 }
