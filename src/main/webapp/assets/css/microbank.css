@@ -3,53 +3,46 @@
    Bootstrap 5 fournit la grille et les composants ; ce fichier definit
    l'identite visuelle par-dessus, sans modifier le balisage des JSP.
 
-   Direction : registre comptable edite. Papier chaud, encre foret,
-   accent terre cuite, chiffres monospaces alignes en colonnes.
+   Direction : produit bancaire moderne, strictement noir et blanc.
+   Aucune couleur n'est utilisee nulle part dans ce fichier : le sens d'un
+   credit, d'un debit ou d'un statut se lit a la forme (plein / contour /
+   hachure / pastille), jamais a la teinte.
    ===================================================================== */
 
 @import url("polices.css");
 
 :root {
-    /* Encres */
-    --encre: #12261F;
-    --encre-douce: #3D5148;
-    --encre-pale: #6E7F77;
+    /* Encres (aucune teinte, uniquement des gris) */
+    --noir: #0A0A0A;
+    --noir-doux: #2E2E2E;
+    --gris: #6B6B6B;
+    --gris-clair: #A8A8A8;
 
-    /* Papiers */
-    --papier: #F6F1E7;
-    --papier-clair: #FCFAF5;
-    --papier-ombre: #EAE2D3;
-
-    /* Accents */
-    --terre: #B4541F;
-    --terre-claire: #D9784A;
-    --or: #C89B3C;
-
-    /* Semantique bancaire */
-    --credit: #1D6A4A;
-    --debit: #9E3418;
+    /* Surfaces */
+    --blanc: #FFFFFF;
+    --blanc-casse: #F7F7F7;
+    --gris-surface: #EDEDED;
 
     /* Traits */
-    --trait: #DCD2C0;
-    --trait-fort: #C3B79F;
+    --trait: #E4E4E4;
+    --trait-fort: #CFCFCF;
 
-    --rayon: 2px;
-    --ombre-carte: 0 1px 0 var(--papier-ombre), 0 12px 28px -22px rgba(18, 38, 31, 0.55);
+    --rayon-sm: 8px;
+    --rayon: 12px;
+    --rayon-lg: 22px;
+    --ombre-carte: 0 1px 2px rgba(0, 0, 0, 0.04), 0 10px 26px -16px rgba(0, 0, 0, 0.16);
 
-    --police-titre: "Fraunces", Georgia, "Times New Roman", serif;
+    --police-titre: "Bricolage Grotesque", "IBM Plex Sans", -apple-system, sans-serif;
     --police-texte: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
     --police-chiffre: "IBM Plex Mono", "SF Mono", Consolas, monospace;
 }
 
 /* ---------------------------------------------------------------------
-   Fond : papier legerement grene, plus une regle verticale discrete.
+   Fond et typographie de base.
    --------------------------------------------------------------------- */
 body {
-    background-color: var(--papier);
-    background-image:
-        radial-gradient(circle at 1px 1px, rgba(18, 38, 31, 0.045) 1px, transparent 0);
-    background-size: 4px 4px;
-    color: var(--encre);
+    background-color: var(--blanc);
+    color: var(--noir);
     font-family: var(--police-texte);
     font-size: 0.95rem;
     line-height: 1.6;
@@ -58,18 +51,13 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--police-titre);
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    color: var(--encre);
-}
-
-h1.h3 {
-    font-size: 1.85rem;
-    font-variation-settings: "SOFT" 0, "WONK" 1;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--noir);
 }
 
 /* Montants, dates, references et identifiants : chiffres a chasse fixe, pour
-   qu'ils s'alignent verticalement en colonne comme dans un registre.
+   qu'ils s'alignent verticalement en colonne comme dans un tableau de donnees.
    La classe est posee explicitement sur les cellules concernees : une colonne
    ajoutee ou deplacee ne peut pas casser l'alignement. */
 .cellule-chiffre,
@@ -87,31 +75,54 @@ code, .reference {
 }
 
 /* ---------------------------------------------------------------------
-   Navigation : bandeau encre, filet or, majuscules espacees.
+   Reflet anime : le seul mouvement decoratif de l'interface, reutilise
+   sur la navbar, le panneau de connexion et la carte de solde. Un balayage
+   lumineux monochrome, jamais colore.
+   --------------------------------------------------------------------- */
+@keyframes glisser-reflet {
+    from { background-position: 0% 0; }
+    to   { background-position: 100% 0; }
+}
+
+/* ---------------------------------------------------------------------
+   Navigation : bandeau noir plein, filet lumineux anime en pied de barre.
    --------------------------------------------------------------------- */
 .navbar-microbank {
-    background-color: var(--encre);
-    border-bottom: 3px solid var(--terre);
+    background-color: var(--noir);
     padding-top: 0.85rem;
     padding-bottom: 0.85rem;
+    position: relative;
+}
+
+.navbar-microbank::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background-image: linear-gradient(100deg,
+        transparent 35%, rgba(255, 255, 255, 0.9) 50%, transparent 65%);
+    background-size: 250% 100%;
+    animation: glisser-reflet 4.5s linear infinite;
 }
 
 .navbar-microbank .navbar-brand {
     font-family: var(--police-titre);
-    font-weight: 700;
+    font-weight: 800;
     font-size: 1.35rem;
     letter-spacing: -0.02em;
-    color: var(--papier-clair);
+    color: var(--blanc);
 }
 
-.navbar-microbank .navbar-brand::first-letter {
-    color: var(--or);
+.navbar-microbank .navbar-brand .point {
+    color: var(--gris-clair);
 }
 
 .navbar-microbank .nav-link {
-    color: rgba(246, 241, 231, 0.72);
+    color: rgba(255, 255, 255, 0.62);
     font-size: 0.78rem;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.09em;
     text-transform: uppercase;
     padding-left: 0.9rem;
@@ -121,12 +132,11 @@ code, .reference {
 }
 
 .navbar-microbank .nav-link:hover {
-    color: var(--papier-clair);
+    color: var(--blanc);
 }
 
 .navbar-microbank .nav-link.actif {
-    color: var(--papier-clair);
-    border-bottom: none;
+    color: var(--blanc);
 }
 
 /* Le marqueur de page courante glisse sous l'onglet actif. */
@@ -137,7 +147,7 @@ code, .reference {
     right: 0.9rem;
     bottom: -0.35rem;
     height: 2px;
-    background: var(--or);
+    background: var(--blanc);
     animation: glisser-marqueur 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -146,23 +156,25 @@ code, .reference {
     to   { transform: scaleX(1); opacity: 1; }
 }
 
+/* Puce de role (ADMIN/AGENT) : toujours un chip blanc sur la barre noire,
+   quelle que soit la variante Bootstrap portee dans la JSP. */
 .navbar-microbank .badge {
-    background-color: var(--or) !important;
-    color: var(--encre) !important;
+    background-color: var(--blanc) !important;
+    color: var(--noir) !important;
     font-family: var(--police-texte);
     font-size: 0.62rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    border-radius: 1px;
-    padding: 0.25em 0.5em;
+    border-radius: var(--rayon-sm);
+    padding: 0.3em 0.6em;
 }
 
 /* ---------------------------------------------------------------------
-   Cartes : feuilles de papier posees, coins nets.
+   Cartes : blanches, bord fin, ombre neutre, coins doux.
    --------------------------------------------------------------------- */
 .card {
-    background-color: var(--papier-clair);
+    background-color: var(--blanc);
     border: 1px solid var(--trait);
     border-radius: var(--rayon);
     box-shadow: var(--ombre-carte);
@@ -173,42 +185,83 @@ code, .reference {
     border-bottom: 1px solid var(--trait);
     font-family: var(--police-texte);
     font-size: 0.72rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--encre-douce);
+    color: var(--gris);
     padding-top: 0.85rem;
     padding-bottom: 0.85rem;
 }
 
 /* ---------------------------------------------------------------------
-   Compteurs du tableau de bord : chiffre dominant, filet lateral.
+   Compteurs du tableau de bord.
    --------------------------------------------------------------------- */
 .carte-statistique {
-    border-left: 3px solid var(--encre);
     position: relative;
     overflow: hidden;
 }
 
-.carte-statistique:nth-of-type(1) { border-left-color: var(--encre); }
-
 .carte-statistique .text-muted {
     font-size: 0.7rem !important;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.13em;
     text-transform: uppercase;
-    color: var(--encre-pale) !important;
+    color: var(--gris) !important;
 }
 
 .carte-statistique .valeur {
-    font-family: var(--police-titre);
     font-variant-numeric: tabular-nums;
     font-size: 2.6rem;
     font-weight: 600;
     line-height: 1.05;
     letter-spacing: -0.03em;
-    color: var(--encre);
+    color: var(--noir);
     margin-top: 0.35rem;
+}
+
+/* Le chiffre le plus important de la page (solde) : carte inversee en noir,
+   avec le meme reflet anime que la navbar. Marquee explicitement par une
+   classe sur la JSP plutot que par une position, pour rester fiable si la
+   page evolue. */
+.carte-statistique-hero {
+    background-color: var(--noir);
+    border-color: var(--noir);
+    color: var(--blanc);
+}
+
+.carte-statistique-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(100deg,
+        transparent 30%, rgba(255, 255, 255, 0.07) 50%, transparent 70%);
+    background-size: 250% 100%;
+    animation: glisser-reflet 6s linear infinite;
+    pointer-events: none;
+}
+
+.carte-statistique-hero .text-muted {
+    color: rgba(255, 255, 255, 0.55) !important;
+}
+
+.carte-statistique-hero .valeur {
+    color: var(--blanc);
+}
+
+.carte-statistique-hero .form-select {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.carte-statistique-hero .btn-outline-primary {
+    background-color: transparent;
+    border-color: rgba(255, 255, 255, 0.55);
+    color: var(--blanc);
+}
+
+.carte-statistique-hero .btn-outline-primary:hover {
+    background-color: var(--blanc);
+    border-color: var(--blanc);
+    color: var(--noir);
 }
 
 /* Chaque compteur apparait avec un leger decalage a l'ouverture. */
@@ -228,12 +281,14 @@ code, .reference {
 
 /* ---------------------------------------------------------------------
    Barre de repartition des mouvements du jour.
+   Plein noir = entrees, hachure grise = sorties : aucune couleur.
    --------------------------------------------------------------------- */
 .barre-repartition {
     display: flex;
     height: 10px;
-    background-color: var(--papier-ombre);
+    background-color: var(--blanc-casse);
     border: 1px solid var(--trait);
+    border-radius: var(--rayon-sm);
     overflow: hidden;
 }
 
@@ -244,13 +299,13 @@ code, .reference {
 }
 
 .barre-repartition .part-credit {
-    background-color: var(--credit);
+    background-color: var(--noir);
 }
 
 .barre-repartition .part-debit {
     background-image: repeating-linear-gradient(
-        45deg, var(--debit), var(--debit) 3px,
-        rgba(158, 52, 24, 0.72) 3px, rgba(158, 52, 24, 0.72) 6px);
+        45deg, var(--trait-fort), var(--trait-fort) 3px,
+        var(--blanc-casse) 3px, var(--blanc-casse) 6px);
 }
 
 @keyframes etirer {
@@ -259,20 +314,46 @@ code, .reference {
 }
 
 /* ---------------------------------------------------------------------
-   Montants : le sens du mouvement se lit a la couleur et au signe.
+   Montants : le sens du mouvement se lit a la pastille, pas a la couleur.
+   Pastille pleine = credit, pastille creuse = debit.
    --------------------------------------------------------------------- */
+.montant-credit,
+.montant-debit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+}
+
+.montant-credit::before,
+.montant-debit::before {
+    content: "";
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
 .montant-credit {
-    color: var(--credit);
-    font-weight: 600;
+    color: var(--noir);
+    font-weight: 700;
+}
+
+.montant-credit::before {
+    background-color: var(--noir);
 }
 
 .montant-debit {
-    color: var(--debit);
-    font-weight: 600;
+    color: var(--noir-doux);
+    font-weight: 500;
+}
+
+.montant-debit::before {
+    background-color: transparent;
+    border: 1.3px solid var(--gris);
 }
 
 /* ---------------------------------------------------------------------
-   Tableaux : lignes de registre, entetes en petites capitales.
+   Tableaux : entete soulignee de noir, survol gris tres clair.
    --------------------------------------------------------------------- */
 .tableau-donnees {
     border-color: var(--trait);
@@ -280,13 +361,13 @@ code, .reference {
 
 .tableau-donnees thead th {
     background-color: transparent;
-    border-bottom: 2px solid var(--encre);
+    border-bottom: 2px solid var(--noir);
     font-family: var(--police-texte);
     font-size: 0.68rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--encre-douce);
+    color: var(--gris);
     padding-top: 0.9rem;
     padding-bottom: 0.9rem;
 }
@@ -297,7 +378,7 @@ code, .reference {
 }
 
 .tableau-donnees tbody tr:hover {
-    background-color: var(--papier-ombre) !important;
+    background-color: var(--blanc-casse) !important;
     --bs-table-accent-bg: transparent;
 }
 
@@ -308,64 +389,68 @@ code, .reference {
 }
 
 /* ---------------------------------------------------------------------
-   Formulaires : champs sobres, focus terre cuite.
+   Formulaires : champs nets, focus noir franc.
    --------------------------------------------------------------------- */
 .form-label {
     font-size: 0.72rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--encre-douce);
+    color: var(--gris);
     margin-bottom: 0.35rem;
 }
 
 .form-control,
 .form-select {
-    background-color: var(--papier-clair);
-    border: 1px solid var(--trait-fort);
-    border-radius: var(--rayon);
-    color: var(--encre);
+    background-color: var(--blanc);
+    border: 1.5px solid var(--trait-fort);
+    border-radius: var(--rayon-sm);
+    color: var(--noir);
     padding: 0.55rem 0.75rem;
 }
 
 .form-control:focus,
 .form-select:focus {
-    background-color: #fff;
-    border-color: var(--terre);
-    box-shadow: 0 0 0 3px rgba(180, 84, 31, 0.14);
-    color: var(--encre);
+    background-color: var(--blanc);
+    border-color: var(--noir);
+    box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.1);
+    color: var(--noir);
 }
 
 .form-control::placeholder {
-    color: var(--encre-pale);
+    color: var(--gris-clair);
 }
 
 .form-text {
-    color: var(--encre-pale);
+    color: var(--gris);
     font-size: 0.78rem;
 }
 
 .form-control.is-invalid,
 .form-select.is-invalid {
-    border-color: var(--debit);
+    border-color: var(--noir);
+    border-style: dashed;
     background-image: none;
 }
 
 .invalid-feedback {
-    color: var(--debit);
+    color: var(--noir-doux);
     font-size: 0.78rem;
+    font-weight: 600;
 }
 
 /* ---------------------------------------------------------------------
-   Boutons : rectangles nets, deplacement d'un pixel au clic.
+   Boutons : le style (plein / contour / pointille / hachure) porte le sens,
+   jamais la couleur.
    --------------------------------------------------------------------- */
 .btn {
-    border-radius: var(--rayon);
+    border-radius: var(--rayon-sm);
     font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.07em;
+    font-weight: 700;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     padding: 0.55rem 1.1rem;
+    border-width: 1.5px;
     transition: transform 0.1s ease, background-color 0.16s ease,
                 color 0.16s ease, border-color 0.16s ease;
 }
@@ -377,209 +462,296 @@ code, .reference {
 .btn-sm {
     font-size: 0.68rem;
     padding: 0.35rem 0.7rem;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
 }
 
-.btn-primary {
-    background-color: var(--encre);
-    border-color: var(--encre);
-    color: var(--papier-clair);
+/* Plein noir : l'action principale d'un ecran. */
+.btn-primary,
+.btn-success {
+    background-color: var(--noir);
+    border-color: var(--noir);
+    color: var(--blanc);
 }
 
 .btn-primary:hover,
-.btn-primary:focus {
-    background-color: var(--terre);
-    border-color: var(--terre);
-    color: #fff;
+.btn-primary:focus,
+.btn-success:hover,
+.btn-success:focus {
+    background-color: var(--noir-doux);
+    border-color: var(--noir-doux);
+    color: var(--blanc);
 }
 
-.btn-outline-primary {
-    border-color: var(--encre);
-    color: var(--encre);
+/* Contour noir : action secondaire, se remplit au survol. */
+.btn-outline-primary,
+.btn-outline-success {
+    background-color: var(--blanc);
+    border-color: var(--noir);
+    color: var(--noir);
 }
 
-.btn-outline-primary:hover {
-    background-color: var(--encre);
-    border-color: var(--encre);
-    color: var(--papier-clair);
+.btn-outline-primary:hover,
+.btn-outline-success:hover {
+    background-color: var(--noir);
+    border-color: var(--noir);
+    color: var(--blanc);
 }
 
 .btn-outline-secondary {
+    background-color: var(--blanc);
     border-color: var(--trait-fort);
-    color: var(--encre-douce);
+    color: var(--gris);
 }
 
 .btn-outline-secondary:hover {
-    background-color: var(--encre-douce);
-    border-color: var(--encre-douce);
-    color: var(--papier-clair);
+    background-color: var(--noir-doux);
+    border-color: var(--noir-doux);
+    color: var(--blanc);
 }
 
-.btn-success,
-.btn-outline-success {
-    --bs-btn-bg: var(--credit);
-    --bs-btn-border-color: var(--credit);
-    --bs-btn-color: #fff;
-    --bs-btn-hover-bg: #17553a;
-    --bs-btn-hover-border-color: #17553a;
-    --bs-btn-hover-color: #fff;
+.btn-outline-dark {
+    background-color: var(--blanc);
+    border-color: var(--trait-fort);
+    color: var(--noir-doux);
 }
 
-.btn-outline-success {
-    --bs-btn-bg: transparent;
-    --bs-btn-color: var(--credit);
+.btn-outline-dark:hover {
+    background-color: var(--noir);
+    border-color: var(--noir);
+    color: var(--blanc);
 }
 
+/* Contour pointille : operation qui retire de l'argent (retrait). Le trait
+   discontinu marque la difference avec le depot sans recourir a une teinte. */
 .btn-warning,
 .btn-outline-warning {
-    --bs-btn-bg: var(--or);
-    --bs-btn-border-color: var(--or);
-    --bs-btn-color: var(--encre);
-    --bs-btn-hover-bg: #b08a30;
-    --bs-btn-hover-border-color: #b08a30;
-    --bs-btn-hover-color: var(--encre);
+    background-color: var(--blanc);
+    border-style: dashed;
+    border-color: var(--noir);
+    color: var(--noir);
 }
 
-.btn-outline-warning {
-    --bs-btn-bg: transparent;
-    --bs-btn-color: #8a6a20;
-    --bs-btn-border-color: var(--or);
+.btn-warning:hover,
+.btn-outline-warning:hover {
+    background-color: var(--noir);
+    border-style: solid;
+    color: var(--blanc);
 }
 
+/* Hachure fine : action destructrice. Signale "a manier avec precaution"
+   par la texture, pas par le rouge. */
 .btn-outline-danger {
-    --bs-btn-color: var(--debit);
-    --bs-btn-border-color: rgba(158, 52, 24, 0.45);
-    --bs-btn-hover-bg: var(--debit);
-    --bs-btn-hover-border-color: var(--debit);
-    --bs-btn-hover-color: #fff;
+    background-color: var(--blanc);
+    background-image: repeating-linear-gradient(
+        135deg, transparent, transparent 3px,
+        rgba(10, 10, 10, 0.06) 3px, rgba(10, 10, 10, 0.06) 4px);
+    border-color: var(--noir);
+    color: var(--noir);
+}
+
+.btn-outline-danger:hover {
+    background-color: var(--noir);
+    background-image: none;
+    border-color: var(--noir);
+    color: var(--blanc);
 }
 
 .btn-link {
-    color: var(--encre-douce);
+    color: var(--noir-doux);
     text-transform: none;
     letter-spacing: 0;
+    font-weight: 500;
     text-decoration-thickness: 1px;
     text-underline-offset: 3px;
 }
 
 .btn-link:hover {
-    color: var(--terre);
+    color: var(--noir);
 }
 
 /* ---------------------------------------------------------------------
-   Etiquettes de statut.
+   Etiquettes de statut : plein = actif, hachure = a surveiller, gris = neutre.
    --------------------------------------------------------------------- */
 .badge {
-    border-radius: 1px;
+    border-radius: var(--rayon-sm);
     font-family: var(--police-texte);
     font-size: 0.65rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    padding: 0.35em 0.6em;
+    padding: 0.35em 0.65em;
 }
 
-.badge.text-bg-success { background-color: var(--credit) !important; color: #fff !important; }
-.badge.text-bg-secondary { background-color: var(--encre-pale) !important; color: #fff !important; }
-.badge.text-bg-warning { background-color: var(--or) !important; color: var(--encre) !important; }
-.badge.text-bg-dark { background-color: var(--encre) !important; color: var(--papier-clair) !important; }
-.badge.text-bg-info { background-color: var(--papier-ombre) !important; color: var(--encre) !important; }
+.badge.text-bg-success {
+    background-color: var(--noir) !important;
+    color: var(--blanc) !important;
+}
+
+.badge.text-bg-secondary {
+    background-color: var(--gris-surface) !important;
+    color: var(--noir-doux) !important;
+}
+
+.badge.text-bg-warning {
+    background-color: var(--blanc) !important;
+    color: var(--noir) !important;
+    border: 1.3px dashed var(--noir);
+}
+
+.badge.text-bg-dark {
+    background-color: var(--noir) !important;
+    color: var(--blanc) !important;
+}
+
+.badge.text-bg-info {
+    background-color: var(--blanc) !important;
+    color: var(--noir) !important;
+    border: 1.3px solid var(--noir);
+}
 
 /* ---------------------------------------------------------------------
-   Messages : bande verticale coloree, pas de bloc criard.
+   Messages : un glyphe distingue le type, jamais une teinte.
    --------------------------------------------------------------------- */
 .alert {
-    background-color: var(--papier-clair);
+    background-color: var(--blanc-casse);
     border: 1px solid var(--trait);
-    border-left: 3px solid var(--encre-pale);
+    border-left: 3px solid var(--noir);
     border-radius: var(--rayon);
-    color: var(--encre);
+    color: var(--noir);
     font-size: 0.9rem;
+    padding-left: 2.75rem;
+    position: relative;
     animation: monter 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.alert-success { border-left-color: var(--credit); }
-.alert-danger  { border-left-color: var(--debit); }
-.alert-warning { border-left-color: var(--or); }
-.alert-info    { border-left-color: var(--encre-douce); }
+.alert::before {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    font-family: var(--police-chiffre);
+    font-weight: 700;
+    font-size: 0.85rem;
+    line-height: 1;
+}
+
+.alert-success::before { content: "✓"; }
+.alert-danger::before  { content: "✕"; }
+.alert-warning::before { content: "!"; }
+.alert-info::before    { content: "i"; font-style: italic; }
+
+.alert-danger {
+    border-left-width: 4px;
+}
 
 /* ---------------------------------------------------------------------
    Pagination.
    --------------------------------------------------------------------- */
 .pagination {
-    --bs-pagination-border-radius: var(--rayon);
+    --bs-pagination-border-radius: var(--rayon-sm);
     gap: 0.25rem;
 }
 
 .page-link {
-    background-color: var(--papier-clair);
+    background-color: var(--blanc);
     border: 1px solid var(--trait);
-    color: var(--encre-douce);
+    color: var(--gris);
     font-family: var(--police-chiffre);
     font-size: 0.8rem;
     padding: 0.4rem 0.75rem;
 }
 
 .page-link:hover {
-    background-color: var(--papier-ombre);
+    background-color: var(--blanc-casse);
     border-color: var(--trait-fort);
-    color: var(--encre);
+    color: var(--noir);
 }
 
 .page-item.active .page-link {
-    background-color: var(--encre);
-    border-color: var(--encre);
-    color: var(--papier-clair);
+    background-color: var(--noir);
+    border-color: var(--noir);
+    color: var(--blanc);
 }
 
 .page-item.disabled .page-link {
     background-color: transparent;
     border-color: var(--trait);
-    color: var(--encre-pale);
+    color: var(--gris-clair);
 }
 
 /* ---------------------------------------------------------------------
-   Page de connexion : filet or en haut, marque en serif.
+   Page de connexion : panneau noir / panneau blanc, plein ecran.
    --------------------------------------------------------------------- */
-.page-connexion {
+.corps-connexion {
+    margin: 0;
+}
+
+.ecran-connexion {
     min-height: 100vh;
     display: flex;
+}
+
+.panneau-marque {
+    flex: 0 0 46%;
+    background-color: var(--noir);
+    color: var(--blanc);
     align-items: center;
-    background-image:
-        radial-gradient(circle at 1px 1px, rgba(18, 38, 31, 0.05) 1px, transparent 0),
-        linear-gradient(180deg, var(--papier-ombre), var(--papier) 45%);
-    background-size: 4px 4px, 100% 100%;
+    justify-content: center;
+    padding: 4rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.panneau-marque::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(115deg,
+        transparent 25%, rgba(255, 255, 255, 0.05) 50%, transparent 75%);
+    background-size: 250% 100%;
+    animation: glisser-reflet 7s linear infinite;
+    pointer-events: none;
+}
+
+.panneau-formulaire {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: var(--blanc);
+}
+
+.formulaire-connexion {
+    width: 100%;
+    max-width: 24rem;
 }
 
 .marque-connexion {
     font-family: var(--police-titre);
     font-size: 2.6rem;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: -0.03em;
-    color: var(--encre);
+    color: var(--blanc);
 }
 
 .marque-connexion .point {
-    color: var(--terre);
+    color: var(--gris-clair);
 }
 
 .sous-marque {
     font-size: 0.72rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--encre-pale);
+    color: rgba(255, 255, 255, 0.5);
 }
 
-.carte-connexion {
-    border-top: 3px solid var(--terre);
-    animation: monter 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Capacites listees a gauche de la connexion : lignes de sommaire.
-   Gouttiere annulee pour que les filets des deux colonnes se rejoignent. */
+/* Capacites listees sur le panneau noir : lignes de sommaire.
+   Gouttiere annulee pour que les filets s'etendent d'un bord a l'autre. */
 .liste-capacites {
     --bs-gutter-x: 0;
+    position: relative;
+    z-index: 1;
 }
 
 .liste-capacites dt,
@@ -587,24 +759,30 @@ code, .reference {
     padding-top: 0.55rem;
     padding-bottom: 0.55rem;
     margin-bottom: 0;
-    border-bottom: 1px solid var(--trait);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    color: rgba(255, 255, 255, 0.85);
 }
 
 .liste-capacites dd {
     font-family: var(--police-chiffre);
     font-size: 0.82rem;
-    color: var(--encre-douce);
+    color: rgba(255, 255, 255, 0.55);
+}
+
+@media (max-width: 991.98px) {
+    .ecran-connexion { display: block; }
+    .panneau-formulaire { min-height: 100vh; }
 }
 
 /* ---------------------------------------------------------------------
-   Detail de compte : le solde est l'element dominant de la page.
+   Detail de compte / client : le solde est l'element dominant de la page.
    --------------------------------------------------------------------- */
 dl.row dt {
     font-size: 0.72rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.09em;
     text-transform: uppercase;
-    color: var(--encre-pale);
+    color: var(--gris);
     padding-top: 0.45rem;
 }
 
@@ -615,13 +793,13 @@ dl.row dd {
 }
 
 a {
-    color: var(--terre);
+    color: var(--noir);
     text-decoration-thickness: 1px;
     text-underline-offset: 2px;
 }
 
 a:hover {
-    color: var(--encre);
+    color: var(--gris);
 }
 
 .navbar a, .btn, .page-link {
@@ -632,7 +810,7 @@ a:hover {
    Pied de page.
    --------------------------------------------------------------------- */
 .pied-de-page {
-    color: var(--encre-pale);
+    color: var(--gris);
     font-size: 0.75rem;
     letter-spacing: 0.04em;
     border-top: 1px solid var(--trait);
@@ -660,6 +838,17 @@ a:hover {
     .card {
         border: 1px solid #000;
         box-shadow: none;
+    }
+
+    .carte-statistique-hero {
+        background: #fff !important;
+        color: #000 !important;
+        border: 1px solid #000 !important;
+    }
+
+    .carte-statistique-hero .valeur,
+    .carte-statistique-hero .text-muted {
+        color: #000 !important;
     }
 
     .tableau-donnees thead th {
