@@ -18,7 +18,7 @@
     <div class="card shadow-sm">
         <div class="card-body p-4 text-center">
 
-            <h1 class="display-5 fw-bold" style="color: var(--microbank-bleu);">
+            <h1 class="display-5 fw-bold">
                 <c:choose>
                     <c:when test="${not empty codeErreur}">${codeErreur}</c:when>
                     <c:otherwise>Erreur</c:otherwise>
