@@ -4,7 +4,11 @@ target/
 *.jar
 
 tasks/
-test/
+
+# Tests automatises : non demandes par le sujet du module. Conserves en local
+# pour verification personnelle, retires du depot public.
+/src/test/
+
 .idea/
 *.iml
 *.ipr
