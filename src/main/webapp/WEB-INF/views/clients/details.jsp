@@ -120,23 +120,10 @@
                     </c:otherwise>
                 </c:choose>
 
-                <%-- Le jeton anti-CSRF passe par l'URL : sur un envoi multipart,
-                     les parametres de l'URL restent lisibles par le filtre. --%>
-                <form method="post" enctype="multipart/form-data"
-                      action="${contexte}/clients/document?csrfToken=${csrfToken}"
-                      class="row g-2">
-                    <input type="hidden" name="clientId" value="${client.id}">
-                    <div class="col-12 col-md-8">
-                        <input type="file" name="document" class="form-control"
-                               accept="image/jpeg,image/png,application/pdf" required>
-                        <div class="form-text">JPEG, PNG ou PDF, 2 Mo maximum.</div>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <button type="submit" class="btn btn-outline-primary w-100">
-                            Televerser
-                        </button>
-                    </div>
-                </form>
+                <a href="${contexte}/clients/edit?id=${client.id}"
+                   class="btn btn-outline-primary btn-sm">
+                    ${empty client.document ? 'Ajouter la piece' : 'Remplacer la piece'}
+                </a>
             </div>
         </div>
     </div>

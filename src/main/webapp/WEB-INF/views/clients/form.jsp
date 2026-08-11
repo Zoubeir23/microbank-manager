@@ -12,9 +12,12 @@
 
 <div class="card">
     <div class="card-body">
-        <form method="post" action="${contexte}/clients/${creation ? 'create' : 'update'}"
-              novalidate>
-            <input type="hidden" name="csrfToken" value="${csrfToken}">
+        <%-- Formulaire multipart : le jeton anti-CSRF passe par l'URL, pas par un champ
+             cache, car le filtre lit les parametres avant que la servlet n'ait analyse
+             le corps multipart (voir AuthenticationFilter). --%>
+        <form method="post"
+              action="${contexte}/clients/${creation ? 'create' : 'update'}?csrfToken=${csrfToken}"
+              enctype="multipart/form-data" novalidate>
             <input type="hidden" name="id" value="<c:out value='${formulaire.id}'/>">
 
             <div class="row g-3">
@@ -84,6 +87,23 @@
                             Inactif
                         </option>
                     </select>
+                </div>
+
+                <%-- Piece d'identite (bonus 1) : toujours facultative, un client peut
+                     etre cree ou modifie sans document. --%>
+                <div class="col-12">
+                    <label for="document" class="form-label">Piece d'identite</label>
+                    <input type="file" id="document" name="document"
+                           accept="image/jpeg,image/png,application/pdf"
+                           class="form-control ${not empty erreurs['document'] ? 'is-invalid' : ''}">
+                    <div class="invalid-feedback"><c:out value="${erreurs['document']}"/></div>
+                    <div class="form-text">
+                        JPEG, PNG ou PDF, 2 Mo maximum.
+                        <c:if test="${not empty documentActuel}">
+                            Document actuel : <c:out value="${documentActuel.nomFichier}"/>
+                            &mdash; laisser ce champ vide pour ne pas le changer.
+                        </c:if>
+                    </div>
                 </div>
             </div>
 

@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 import sn.isi.iage.microbank.dto.PageResult;
 import sn.isi.iage.microbank.model.User;
 import sn.isi.iage.microbank.util.CsrfTokenManager;
@@ -12,6 +13,7 @@ import sn.isi.iage.microbank.util.SessionAttributes;
 import sn.isi.iage.microbank.util.ValueParser;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 
 /**
  * Comportements communs a toutes les servlets de l'application :
@@ -78,5 +80,17 @@ public abstract class BaseServlet extends HttpServlet {
         String cheminSupplementaire = request.getPathInfo();
         return cheminSupplementaire == null || cheminSupplementaire.isBlank()
                 ? "/" : cheminSupplementaire;
+    }
+
+    /**
+     * Ne conserve que le nom du fichier envoye par le navigateur, sans son chemin :
+     * un navigateur peut soumettre "../../etc/passwd" comme nom de fichier.
+     */
+    protected String nomDeFichierSecurise(Part fichier) {
+        String nomSoumis = fichier.getSubmittedFileName();
+        if (nomSoumis == null || nomSoumis.isBlank()) {
+            return "piece-identite";
+        }
+        return Paths.get(nomSoumis.replace('\\', '/')).getFileName().toString();
     }
 }
