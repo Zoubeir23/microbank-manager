@@ -64,9 +64,14 @@ public class ClientServlet extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ClientForm formulaire = lireFormulaire(request);
+        ClientForm formulaire = null;
 
         try {
+            // La lecture des champs texte declenche elle aussi l'analyse du corps
+            // multipart : si le fichier joint depasse la taille maximale, c'est ici,
+            // avant meme d'atteindre le fichier lui-meme, que le conteneur peut lever
+            // IllegalStateException. D'ou ce bloc unique couvrant formulaire et fichier.
+            formulaire = lireFormulaire(request);
             Part fichier = lireFichierEnvoye(request);
             byte[] contenuDuFichier = null;
 
@@ -100,6 +105,14 @@ public class ClientServlet extends BaseServlet {
         } catch (BusinessRuleException documentInvalide) {
             request.setAttribute(SessionAttributes.ERREURS_DE_VALIDATION,
                     Map.of("document", documentInvalide.getMessage()));
+            request.setAttribute("formulaire", formulaire);
+            afficher(request, response, "clients/form");
+        } catch (IllegalStateException fichierTropVolumineux) {
+            // Requete rejetee par le conteneur avant analyse complete : les champs
+            // texte, eventuellement lus, restent utilisables pour reafficher le
+            // formulaire tel que l'utilisateur l'avait rempli.
+            request.setAttribute(SessionAttributes.ERREURS_DE_VALIDATION,
+                    Map.of("document", "Le fichier depasse la taille maximale autorisee (2 Mo)."));
             request.setAttribute("formulaire", formulaire);
             afficher(request, response, "clients/form");
         }
@@ -184,6 +197,11 @@ public class ClientServlet extends BaseServlet {
      * sans encodage multipart, ne doivent pas etre traites comme une erreur.
      * {@code getPart} leve une exception si la requete n'est pas multipart ; dans ce
      * cas, il n'y a simplement pas de fichier a lire.
+     * <p>
+     * Si le fichier ou la requete depasse la taille maximale autorisee (voir
+     * {@code @MultipartConfig}), le conteneur leve {@code IllegalStateException} ;
+     * elle n'est pas interceptee ici mais dans {@code doPost}, qui gere aussi le cas
+     * ou cette meme exception survient plus tot, lors de la lecture des champs texte.
      */
     private Part lireFichierEnvoye(HttpServletRequest request) {
         try {
