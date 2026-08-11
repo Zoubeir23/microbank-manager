@@ -199,7 +199,7 @@ src/main/java/sn/isi/iage/microbank/
 src/main/webapp/
 ├── assets/
 │   ├── css/      Bootstrap 5.3, microbank.css (identite visuelle), polices.css
-│   ├── fonts/    Fraunces et IBM Plex embarques (licence SIL OFL 1.1)
+│   ├── fonts/    Bricolage Grotesque et IBM Plex embarques (licence SIL OFL 1.1)
 │   └── js/       Bootstrap bundle
 └── WEB-INF/
     ├── web.xml           Sessions, pages d'erreur, declaration du taglib
@@ -238,14 +238,18 @@ src/main/webapp/
 Bootstrap 5.3 fournit la grille et les composants ; `assets/css/microbank.css` pose
 l'identite visuelle par-dessus, sans modifier le balisage des JSP.
 
-Parti pris : **un registre comptable edite**, pas un tableau de bord generique.
+Parti pris : **strictement noir et blanc**, pas un tableau de bord generique. Le sens
+(credit/debit, actif/bloque, action normale/destructive) se lit a la forme — plein,
+contour, pointille ou hachure — jamais a une teinte.
 
 | Choix | Raison |
 |---|---|
-| Fond papier chaud, encre vert foret, accent terre cuite | Identite sobre et institutionnelle |
-| Titres en Fraunces, texte en IBM Plex Sans | Une serif de caractere, une sans technique pour la lecture |
-| Montants, dates et references en IBM Plex Mono | Chiffres tabulaires : les colonnes s'alignent comme dans un livre de comptes |
-| Vert pour les credits, rouge hachure pour les debits | Le sens d'un mouvement se lit sans lire le libelle |
+| Palette noir / blanc / gris uniquement | Aucune couleur nulle part dans le CSS ; identite nette et institutionnelle |
+| Pastille pleine = credit, pastille creuse = debit | Le sens d'un mouvement se lit sans recourir a la couleur |
+| Bouton plein = depot, pointille = retrait, hachure = suppression | Le style du bouton porte le sens de l'action |
+| Titres en Bricolage Grotesque, texte en IBM Plex Sans | Un grotesque affirme pour la hierarchie, une sans technique pour la lecture |
+| Montants, dates et references en IBM Plex Mono | Chiffres tabulaires : les colonnes s'alignent comme dans un tableau de donnees |
+| Panneau noir / panneau blanc sur la page de connexion | Contraste graphique fort, esprit produit plutot que formulaire administratif |
 | Polices, CSS et JS embarques dans le WAR | La demonstration fonctionne sans connexion internet |
 
 Les animations se limitent a l'ouverture de page et sont desactivees si le systeme
