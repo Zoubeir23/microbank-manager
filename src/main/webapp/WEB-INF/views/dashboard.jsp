@@ -42,7 +42,7 @@
     </div>
 
     <div class="col-12 col-md-6 col-lg-3">
-        <div class="card carte-statistique h-100">
+        <div class="card carte-statistique carte-statistique-hero h-100">
             <div class="card-body">
                 <div class="text-muted">Solde total</div>
                 <div class="valeur">

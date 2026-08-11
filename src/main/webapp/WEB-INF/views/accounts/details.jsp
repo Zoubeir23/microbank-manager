@@ -66,7 +66,7 @@
     </div>
 
     <div class="col-12 col-lg-5">
-        <div class="card carte-statistique h-100">
+        <div class="card carte-statistique carte-statistique-hero h-100">
             <div class="card-body">
                 <div class="text-muted">Solde actuel</div>
                 <div class="valeur">${mb:montant(compte.solde)}</div>
