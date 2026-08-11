@@ -12,12 +12,10 @@
 
 <div class="card">
     <div class="card-body">
-        <%-- Formulaire multipart : le jeton anti-CSRF passe par l'URL, pas par un champ
-             cache, car le filtre lit les parametres avant que la servlet n'ait analyse
-             le corps multipart (voir AuthenticationFilter). --%>
         <form method="post"
-              action="${contexte}/clients/${creation ? 'create' : 'update'}?csrfToken=${csrfToken}"
+              action="${contexte}/clients/${creation ? 'create' : 'update'}"
               enctype="multipart/form-data" novalidate>
+            <input type="hidden" name="csrfToken" value="${csrfToken}">
             <input type="hidden" name="id" value="<c:out value='${formulaire.id}'/>">
 
             <div class="row g-3">
