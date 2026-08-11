@@ -66,14 +66,14 @@
                         <form method="post" action="${contexte}/users/toggle" class="d-inline">
                             <input type="hidden" name="csrfToken" value="${csrfToken}">
                             <input type="hidden" name="id" value="${utilisateur.id}">
-                            <%-- Un administrateur ne peut pas desactiver son propre compte
-                                 (§ regle metier) : le bouton est desactive plutot que de
+                            <%-- Un administrateur ne peut pas modifier le statut de son propre
+                                 compte (§ regle metier) : le bouton est desactive plutot que de
                                  laisser cliquer puis afficher une erreur. Le controle reste
                                  fait aussi cote serveur, un bouton desactive n'etant qu'une
                                  aide visuelle et non une protection. --%>
                             <button type="submit"
                                     ${estSoiMeme ? 'disabled' : ''}
-                                    title="${estSoiMeme ? 'Vous ne pouvez pas desactiver votre propre compte.' : ''}"
+                                    title="${estSoiMeme ? 'Vous ne pouvez pas modifier le statut de votre propre compte.' : ''}"
                                     class="btn btn-sm ${utilisateur.statut eq 'ACTIF' ? 'btn-outline-danger' : 'btn-outline-success'}">
                                     ${utilisateur.statut eq 'ACTIF' ? 'Desactiver' : 'Activer'}
                             </button>
