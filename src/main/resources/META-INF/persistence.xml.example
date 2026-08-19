@@ -21,8 +21,8 @@
                       value="org.postgresql.Driver"/>
             <property name="jakarta.persistence.jdbc.url"
                       value="jdbc:postgresql://localhost:5432/microbank"/>
-            <property name="jakarta.persistence.jdbc.user" value="zoubeir"/>
-            <property name="jakarta.persistence.jdbc.password" value=""/>
+            <property name="jakarta.persistence.jdbc.user" value="CHANGE_ME"/>
+            <property name="jakarta.persistence.jdbc.password" value="CHANGE_ME"/>
 
             <!-- ===================== HIBERNATE ===================== -->
             <property name="hibernate.dialect"

@@ -25,3 +25,6 @@ uploads/
 
 # Artefacts de tests navigateur
 .playwright-mcp/
+
+# Credentials DB locaux : voir persistence.xml.example pour le template
+src/main/resources/META-INF/persistence.xml
