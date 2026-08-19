@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+             https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+
+    <persistence-unit name="microbank-pu" transaction-type="RESOURCE_LOCAL">
+
+        <class>sn.isi.iage.microbank.model.User</class>
+        <class>sn.isi.iage.microbank.model.Client</class>
+        <class>sn.isi.iage.microbank.model.ClientDocument</class>
+        <class>sn.isi.iage.microbank.model.Agency</class>
+        <class>sn.isi.iage.microbank.model.Account</class>
+        <class>sn.isi.iage.microbank.model.Operation</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+        <properties>
+            <!-- ===================== CONNEXION PostgreSQL ===================== -->
+            <property name="jakarta.persistence.jdbc.driver"
+                      value="org.postgresql.Driver"/>
+            <property name="jakarta.persistence.jdbc.url"
+                      value="jdbc:postgresql://localhost:5432/microbank"/>
+            <property name="jakarta.persistence.jdbc.user" value="CHANGE_ME"/>
+            <property name="jakarta.persistence.jdbc.password" value="CHANGE_ME"/>
+
+            <!-- ===================== HIBERNATE ===================== -->
+            <property name="hibernate.dialect"
+                      value="org.hibernate.dialect.PostgreSQLDialect"/>
+
+            <!-- create      : recree le schema a chaque demarrage
+                 create-drop : cree puis supprime a la fermeture
+                 update      : met a jour le schema sans perdre les donnees
+                 validate    : verifie que le schema correspond aux entites
+                 none        : ne touche pas au schema
+                 Le schema de reference reste database.sql ; "update" evite simplement
+                 que l'application refuse de demarrer sur une base fraiche. -->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.highlight_sql" value="false"/>
+
+            <property name="hibernate.connection.pool_size" value="10"/>
+        </properties>
+
+    </persistence-unit>
+
+</persistence>
